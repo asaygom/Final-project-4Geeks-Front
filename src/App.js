@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import injectContext from './store/context';
 
 function App() {
   return (
@@ -22,4 +23,4 @@ function App() {
   );
 }
 
-export default App;
+export default injectContext(App);
