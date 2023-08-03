@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -21,7 +22,9 @@ export default function ForgotPassword() {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Button variant="text" size="small">Back</Button>
+        <Link to='/'>
+          <Button variant="text" size="small">Back</Button>
+        </Link>
         <Box
           sx={{
             marginTop: 8,
