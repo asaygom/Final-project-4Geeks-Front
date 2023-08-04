@@ -58,7 +58,7 @@ export const UserTable = (props) => {
                       {user.role}
                     </TableCell>
                     <TableCell>
-                      {user.trainer}
+                      {user.trainer_id}
                     </TableCell>
                     <TableCell>
                       {user.is_active}

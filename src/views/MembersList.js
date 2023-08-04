@@ -1,8 +1,9 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
-import { Button,Typography, Stack, SvgIcon, Box, Container } from '@mui/material';
+import { useCallback, useMemo, useState, useEffect, useContext } from 'react';
+import { Button,Typography, Stack, Box, Container } from '@mui/material';
 import BottomNav from '../components/BottomNav';
 import { UserSearch } from '../components/UserSearch';
 import { UserTable } from '../components/UserTable';
+import { Context } from "../store/context";
 
 const data = [
   {
@@ -72,7 +73,10 @@ const useSelection = (items = []) => {
     );
   };
   
-  const MembersList = () => {
+const MembersList = () => {
+  const { store, actions } = useContext(Context);
+  useEffect(()=>{actions.getUsers()},[])
+  console.log(store.listOfUsers)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const users = useUsers(page, rowsPerPage);
@@ -117,11 +121,6 @@ return(
               </Stack>
               <div>
                 <Button
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      +
-                    </SvgIcon>
-                  )}
                   variant="contained"
                 >
                   Add
@@ -131,7 +130,7 @@ return(
             <UserSearch />
             <UserTable
               count={data.length}
-              items={users}
+              items={store.listOfUsers.data}
               onDeselectAll={usersSelection.handleDeselectAll}
               onDeselectOne={usersSelection.handleDeselectOne}
               onPageChange={handlePageChange}
