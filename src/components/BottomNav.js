@@ -1,0 +1,31 @@
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import Paper from '@mui/material/Paper';
+
+export default function BottomNav(){
+    return(
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+        <BottomNavigation
+          showLabels
+        >
+          <BottomNavigationAction label="Home"  />
+          <BottomNavigationAction label="Training plan"  />
+          <BottomNavigationAction label="Routines"  />
+          <BottomNavigationAction label="Exercises"  />
+        </BottomNavigation>
+        </Paper>
+    )
+};
+
+/* con iconos y funcionalidad
+<BottomNavigation
+showLabels
+value={value}
+onChange={(event, newValue) => {
+  setValue(newValue);
+}}
+>
+<BottomNavigationAction label="Home" icon={<RestoreIcon />} />
+<BottomNavigationAction label="Training plan" icon={<FavoriteIcon />} />
+<BottomNavigationAction label="Routines" icon={<LocationOnIcon />} />
+<BottomNavigationAction label="Exercises" icon={<LocationOnIcon />} />
+</BottomNavigation> */

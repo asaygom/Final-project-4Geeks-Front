@@ -2,23 +2,20 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link as LinkR} from "react-router-dom";
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+export default function ChangePassword() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
       password: data.get('password'),
+      new_password: data.get('new-password'),
+      re_enter_new_password: data.get('re-enter-new-password'),
     });
   };
 
@@ -26,6 +23,7 @@ export default function Login() {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Button variant="text" size="small">Back</Button>
         <Box
           sx={{
             marginTop: 8,
@@ -34,20 +32,7 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Typography component="h1" variant="h3">
-            FitnessTracker
-          </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
             <TextField
               margin="normal"
               required
@@ -58,23 +43,34 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="new-password"
+              label="New password"
+              type="password"
+              id="new-password"
+              autoComplete="new-password"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="re-enter-new-password"
+              label="Re-enter new password"
+              type="password"
+              id="re-enter-new-password"
+              autoComplete="re-enter-new-password"
+            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Send
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <LinkR to='/forgot_password'>
-                  <Link variant="body2">
-                    Forgot password?
-                  </Link>
-                </LinkR>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
