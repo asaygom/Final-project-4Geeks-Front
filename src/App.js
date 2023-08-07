@@ -8,6 +8,8 @@ import Profile from './views/Profile'
 import './App.css';
 import injectContext from './store/context';
 import MembersList from './views/MembersList';
+import Equipment from './views/Equipment';
+import SetEquipment from './views/SetEquipment';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/members_list' element={<MembersList />} />
+        <Route path='/equipment' element={<Equipment />} />
+        <Route path='/set_equipment' element={<SetEquipment />} />
       </Routes>
     </BrowserRouter>
   );

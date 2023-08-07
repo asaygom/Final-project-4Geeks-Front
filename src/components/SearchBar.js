@@ -1,11 +1,11 @@
 import { Card, InputAdornment, OutlinedInput, SvgIcon } from '@mui/material';
 
-export const UserSearch = () => (
+export const SearchBar = () => (
   <Card sx={{ p: 2 }}>
     <OutlinedInput
       defaultValue=""
       fullWidth
-      placeholder="Search customer"
+      placeholder="Search"
       startAdornment={(
         <InputAdornment position="start">
           <SvgIcon
