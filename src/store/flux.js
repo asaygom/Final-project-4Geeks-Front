@@ -11,7 +11,14 @@ const getState = ({ setStore, getStore, getActions }) => {
                 is_active: false,
                 subscription_date:""
             },
-            listOfUsers: []
+            listOfUsers: [],
+            equipment: {
+                name:"",
+                description:"",
+                status: "",
+                is_active: true
+            },
+            listOfEquipments:[]
         }, 
         actions: {
             getUsers: ()=>{
@@ -19,6 +26,12 @@ const getState = ({ setStore, getStore, getActions }) => {
                     method: "GET",
                     headers:{"Content-Type":"application/json"}
                 }).then((response)=> response.json()).then((data)=>setStore({listOfUsers: data})).catch((error)=>console.log(error))
+            },
+            getEquipment: ()=>{
+                fetch("http://localhost:5000/equipment",{
+                    method: "GET",
+                    headers:{"Content-Type":"application/json"}
+                }).then((response)=> response.json()).then((data)=>setStore({listOfEquipments: data})).catch((error)=>console.log(error))
             }
         }  }  }
 

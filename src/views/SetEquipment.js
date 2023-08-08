@@ -76,8 +76,10 @@ export default function SetEquipment() {
                     id="equipment_status"
                     value={equipmentStatus}
                     label="Status"
+                    displayEmpty
                     onChange={handleChange}
                     >
+                        <MenuItem value=""><em>Select status</em></MenuItem>
                         <MenuItem value='malfunction'>Malfunction</MenuItem>
                         <MenuItem value='not_working'>Not working</MenuItem>
                         <MenuItem value='working'>Working</MenuItem>

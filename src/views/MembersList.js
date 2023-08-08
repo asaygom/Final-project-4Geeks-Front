@@ -76,7 +76,6 @@ const useSelection = (items = []) => {
 const MembersList = () => {
   const { store, actions } = useContext(Context);
   useEffect(()=>{actions.getUsers()},[])
-  console.log(store.listOfUsers)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const users = useUsers(page, rowsPerPage);
