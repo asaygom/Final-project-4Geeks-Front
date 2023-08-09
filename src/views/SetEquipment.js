@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -12,24 +11,11 @@ import Container from '@mui/material/Container';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { useContext } from "react";
+import { Context } from "../store/context";
 
 export default function SetEquipment() {
-    const [equipmentStatus, setEquipmentStatus] = useState('');
-
-    const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-        equipment_name: data.get('equipment_name'),
-        equipment_description: data.get('equipment_description'),
-        equipment_status: data.get('equipment_status'),
-        equipment_active: data.get('is_active')
-    });
-    };
-
-    const handleChange = (event) => {
-      setEquipmentStatus(event.target.value);
-    };    
+    const { store, actions } = useContext(Context);
 
   return (
     <>
@@ -47,11 +33,13 @@ export default function SetEquipment() {
             <Typography component="h1" variant="h5">
             New equipment
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" noValidate onSubmit={actions.handleSubmitEquipment} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                 <TextField
-                    name="equipment_name"
+                    name="name"
+                    value={store.equipment.name}
+                    onChange={actions.handleChangeEquipment}
                     required
                     fullWidth
                     id="equipment_name"
@@ -61,7 +49,9 @@ export default function SetEquipment() {
                 </Grid>
                 <Grid item xs={12}>
                 <TextField
-                    name="equipment_description"
+                    name="description"
+                    value={store.equipment.description}
+                    onChange={actions.handleChangeEquipment}
                     required
                     fullWidth
                     id="equipment_description"
@@ -71,13 +61,13 @@ export default function SetEquipment() {
                 <Grid item xs={12}>
                     <InputLabel id="equipment_status_label">Status</InputLabel>
                     <Select
-                    name='equipment_status'
+                    name='status'
                     labelId="equipment_status_label"
                     id="equipment_status"
-                    value={equipmentStatus}
+                    value={store.equipment.status}
                     label="Status"
                     displayEmpty
-                    onChange={handleChange}
+                    onChange={actions.handleChangeEquipment}
                     >
                         <MenuItem value=""><em>Select status</em></MenuItem>
                         <MenuItem value='malfunction'>Malfunction</MenuItem>
@@ -87,7 +77,7 @@ export default function SetEquipment() {
                 </Grid>
                 <Grid item xs={12}>
                 <FormControlLabel
-                    control={<Checkbox name='is_active' value="is_active" color="primary" />}
+                    control={<Checkbox name='is_active' value={true} onChange={actions.handleChangeEquipment} color="primary" />}
                     label="Active"
                 />
                 </Grid>
