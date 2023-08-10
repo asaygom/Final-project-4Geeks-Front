@@ -8,6 +8,7 @@ import Profile from "./views/Profile";
 import "./App.css";
 import injectContext from "./store/context";
 import MembersList from "./views/MembersList";
+import Signup from "./views/Signup";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/members_list" element={<MembersList />} />
+        <Route path="/newuser" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );

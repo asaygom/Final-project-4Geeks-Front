@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -10,21 +11,27 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import MenuItem from "@mui/material/MenuItem";
+import { useContext } from "react";
+import { Context } from "../store/context";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function Signup() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+const isactivevalue = [
+  {
+    value: true,
+    label: "Yes",
+  },
+  {
+    value: false,
+    label: "No",
+  },
+];
 
+export default function Signup() {
+  const { store, actions } = useContext(Context);
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -42,7 +49,17 @@ export default function Signup() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => {
+              e.preventDefault();
+              actions.newUser({
+                name: store.user.name,
+                last_name: store.user.last_name,
+                email: store.user.email,
+                password: store.user.password,
+                role: store.user.role,
+                is_active: store.user.is_active,
+              });
+            }}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -50,22 +67,73 @@ export default function Signup() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="name"
               autoFocus
+              onChange={(e) => actions.handleOnChange(e, "name")}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              id="last_name"
+              label="Last Name"
+              name="last_name"
+              autoComplete="last_name"
+              autoFocus
+              onChange={(e) => actions.handleOnChange(e, "last_name")}
             />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(e) => actions.handleOnChange(e, "email")}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              label="Password"
+              name="password"
+              autoComplete="password"
+              autoFocus
+              onChange={(e) => actions.handleOnChange(e, "password")}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="roel"
+              label="Role"
+              name="role"
+              autoComplete="role"
+              autoFocus
+              onChange={(e) => actions.handleOnChange(e, "role")}
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              id="outlined-select-currency"
+              select
+              label="Is active?"
+              defaultValue="No"
+              helperText="Select if the new user will be active (select 'NO' for tests)"
+            >
+              {isactivevalue.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
 
             <Button
               type="submit"
