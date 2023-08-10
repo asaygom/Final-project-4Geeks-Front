@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState, useEffect, useContext } from 'react';
 import { Button,Typography, Stack, Box, Container } from '@mui/material';
 import BottomNav from '../components/BottomNav';
-import { UserSearch } from '../components/UserSearch';
+import { SearchBar } from '../components/SearchBar';
 import { UserTable } from '../components/UserTable';
 import { Context } from "../store/context";
 
@@ -76,7 +76,6 @@ const useSelection = (items = []) => {
 const MembersList = () => {
   const { store, actions } = useContext(Context);
   useEffect(()=>{actions.getUsers()},[])
-  console.log(store.listOfUsers)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const users = useUsers(page, rowsPerPage);
@@ -104,7 +103,7 @@ return(
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 5
         }}
       >
         <Container maxWidth="xl">
@@ -127,7 +126,7 @@ return(
                 </Button>
               </div>
             </Stack>
-            <UserSearch />
+            <SearchBar />
             <UserTable
               count={data.length}
               items={store.listOfUsers.data}

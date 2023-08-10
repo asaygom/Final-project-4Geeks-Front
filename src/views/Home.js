@@ -11,7 +11,7 @@ const Home = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8
+        py: 5
       }}
     >
       <Container maxWidth="xl">
