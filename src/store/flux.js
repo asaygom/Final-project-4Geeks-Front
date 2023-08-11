@@ -70,6 +70,13 @@ const getState = ({ setStore, getStore, getActions }) => {
           },
         });
       },
+      deleteEquipment: (id)=>{
+        fetch("http://localhost:5000/equipment/"+id,{
+            method: "DELETE",
+        }).then((response)=> response.json())
+        .then((data)=>console.log(data))
+        .catch((error)=>console.log(error))
+    },
       newUser: (nu) => {
         console.log(JSON.stringify(nu));
         fetch("http://localhost:5000/user", {
