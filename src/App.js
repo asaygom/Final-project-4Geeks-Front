@@ -26,9 +26,9 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/members_list' element={<MembersList />} />
         <Route path='/equipment' element={<Equipment />} />
-        <Route path='/set_equipment' element={<SetEquipment />} />
+        <Route path='/set_equipment/:id' element={<SetEquipment />} />
         <Route path="/newuser" element={<Signup />} />
-        <Route path='/equipment_info' element={<EquipmentInfo />} />
+        <Route path='/equipment_info/:id' element={<EquipmentInfo />} />
       </Routes>
     </BrowserRouter>
   );

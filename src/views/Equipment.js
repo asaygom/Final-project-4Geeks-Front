@@ -5,11 +5,12 @@ import { TopNav } from '../components/TopNav';
 import BottomNav from '../components/BottomNav';
 import { SearchBar } from '../components/SearchBar';
 import { Context } from "../store/context";
+import {useNavigate} from "react-router-dom";
 
 function Equipment() {
     const { store, actions } = useContext(Context);
+    const navigate=useNavigate()
     useEffect(()=>{actions.getEquipment()},[])
-
   return(
     <>
     <TopNav />
@@ -34,6 +35,7 @@ function Equipment() {
                   </Stack>
                   <div>
                       <Button
+                      onClick={()=>navigate('/set_equipment/new')}
                       variant="contained"
                       >
                       Add
@@ -45,7 +47,10 @@ function Equipment() {
               container
               spacing={3}
               >
-                {Object.values(store.listOfEquipments.data).map((equipment,index)=>{return <Grid xs={6} sm={6} lg={3}><EquipmentCard key={index} equipment_name={equipment.name} equipment_img="https://www.bestusedgymequipment.com/wp-content/uploads/2020/09/cybex-vr2-chestpress-1-1.jpg"/></Grid>})}
+                {store.listOfEquipments.data?.map((equipment,index)=>{
+                  return <Grid onClick={()=>navigate("/equipment_info/"+equipment.id)} key={index} xs={6} sm={6} lg={3}>
+                    <EquipmentCard id={equipment.id} equipment_name={equipment.name} equipment_img="https://www.bestusedgymequipment.com/wp-content/uploads/2020/09/cybex-vr2-chestpress-1-1.jpg"/>
+                    </Grid>})}
               </Grid>
           </Stack>
         </Container>

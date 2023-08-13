@@ -7,9 +7,10 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Link as LinkR} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function Login() {
+  const navigate=useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -64,11 +65,9 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <LinkR to='/forgot_password'>
-                  <Link variant="body2">
+                  <Link onClick={()=>navigate("/forgot_password")} variant="body2">
                     Forgot password?
                   </Link>
-                </LinkR>
               </Grid>
             </Grid>
           </Box>

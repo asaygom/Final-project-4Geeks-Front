@@ -1,13 +1,16 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import Paper from '@mui/material/Paper';
+import {useNavigate} from "react-router-dom";
 
 export default function BottomNav(){
+  const navigate=useNavigate()
+
     return(
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <BottomNavigation
           showLabels
         >
-          <BottomNavigationAction label="Home"  />
+          <BottomNavigationAction onClick={()=>navigate('/home')} label="Home"  />
           <BottomNavigationAction label="Training plan"  />
           <BottomNavigationAction label="Routines"  />
           <BottomNavigationAction label="Exercises"  />

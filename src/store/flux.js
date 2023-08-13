@@ -41,12 +41,19 @@ const getState = ({ setStore, getStore, getActions }) => {
       },
       handleChangeEquipment: (event) => {
         const store = getStore();
+        if (event.target.name === "is_active"){setStore({
+          equipment: {
+            ...store.equipment,
+            [event.target.name]: event.target.checked,
+          },
+        });}
+        else{
         setStore({
           equipment: {
             ...store.equipment,
             [event.target.name]: event.target.value,
           },
-        });
+        });}
       },
       handleSubmitEquipment: (event) => {
         event.preventDefault();
@@ -70,6 +77,27 @@ const getState = ({ setStore, getStore, getActions }) => {
           },
         });
       },
+     getEquipmentInfo: (id) => {
+        fetch("http://localhost:5000/equipment/"+id, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((data) => setStore({ equipment: data }))
+          .catch((error) => console.log(error));
+      },
+      updateEquipmentInfo: (event,id) => {
+        event.preventDefault();
+        const store = getStore();
+        fetch("http://localhost:5000/equipment/"+id, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(store.equipment)
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      }, 
       deleteEquipment: (id)=>{
         fetch("http://localhost:5000/equipment/"+id,{
             method: "DELETE",
