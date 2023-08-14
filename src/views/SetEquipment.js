@@ -20,9 +20,8 @@ export default function SetEquipment() {
     const navigate=useNavigate()
     const {id} = useParams()
     useEffect(() => {
-        if (id === "new") {
-            
-        } else {
+        if (id === "new") {}
+        else {
             actions.getEquipmentInfo(id);
         }
     }, []);

@@ -19,6 +19,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         is_active: true,
       },
       listOfEquipments: [],
+      toke: null
     },
     actions: {
       getUsers: () => {
@@ -62,7 +63,7 @@ const getState = ({ setStore, getStore, getActions }) => {
           fetch("http://localhost:5000/equipment", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(store.equipment),
+            body: JSON.stringify(store.equipment)
           })
             .then((response) => response.json())
             .then((data) => console.log(data))
@@ -116,7 +117,6 @@ const getState = ({ setStore, getStore, getActions }) => {
           .then((data) => setStore({ listOfUsers: data }))
           .catch((error) => console.log(error));
       },
-
       handleOnChange: (e, fieldName) => {
         const store = getStore();
         setStore({
@@ -128,6 +128,26 @@ const getState = ({ setStore, getStore, getActions }) => {
 
         console.log(store, fieldName);
       },
+      login: (event) => {
+        event.preventDefault();
+        fetch("http://localhost:5000/login",{
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(),
+          })
+          .then((response) => response.json())
+          .then((data) => sessionStorage.setItem("token", data.access_token))
+          .catch((error) => console.log(error));
+      },
+      handleChangeLogin: (event) => {
+        const store = getStore();
+        setStore({
+          user: {
+            ...store.user,
+            [event.target.name]: event.target.value,
+          }
+        });
+      }
     },
   };
 };

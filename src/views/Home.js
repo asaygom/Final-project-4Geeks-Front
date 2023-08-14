@@ -11,13 +11,13 @@ const Home = () => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 5
+        py: 2
       }}
     >
       <Container maxWidth="xl">
         <Grid
           container
-          spacing={3}
+          spacing={2}
         >
           <Grid
             xs={12}
