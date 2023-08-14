@@ -21,9 +21,9 @@ export default function ChangePassword() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Button variant="text" size="small">Back</Button>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Button variant="text" size="small">Back</Button>
         <Box
           sx={{
             marginTop: 8,

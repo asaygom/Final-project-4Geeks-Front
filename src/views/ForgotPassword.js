@@ -20,11 +20,11 @@ export default function ForgotPassword() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Link to='/'>
+        <Button variant="text" size="small">Back</Button>
+      </Link>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Link to='/'>
-          <Button variant="text" size="small">Back</Button>
-        </Link>
         <Box
           sx={{
             marginTop: 8,

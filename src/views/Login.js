@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useContext, useEffect } from "react";
+import { Context } from "../store/context";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,15 +12,8 @@ import Container from '@mui/material/Container';
 import {useNavigate} from "react-router-dom";
 
 export default function Login() {
+  const { store, actions } = useContext(Context);
   const navigate=useNavigate()
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
 
   return (
       <Container component="main" maxWidth="xs">
@@ -34,7 +29,7 @@ export default function Login() {
           <Typography component="h1" variant="h3">
             FitnessTracker
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={actions.login} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -42,6 +37,8 @@ export default function Login() {
               id="email"
               label="Email Address"
               name="email"
+              value={store.user.email}
+              onChange={actions.handleChangeLogin}
               autoComplete="email"
               autoFocus
             />
@@ -49,10 +46,12 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
               id="password"
+              label="Password"
+              name="password"
+              type="password"
+              value={store.user.password}
+              onChange={actions.handleChangeLogin}
               autoComplete="current-password"
             />
             <Button

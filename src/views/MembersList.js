@@ -5,17 +5,7 @@ import { SearchBar } from '../components/SearchBar';
 import { UserTable } from '../components/UserTable';
 import { Context } from "../store/context";
 
-const data = [
-  {
-    id: '1',
-    name: "John",
-    last_name: 'Smith',
-    email: 'john.smith@sample.com',
-    role: 'Member',
-    trainer: 'John Doe',
-    is_active: 'True',
-    subscription_date: '03/08/23'
-  }]
+const data = []
 
 function applyPagination(documents, page, rowsPerPage) {
    return documents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
@@ -103,11 +93,11 @@ return(
         component="main"
         sx={{
           flexGrow: 1,
-          py: 5
+          py: 2
         }}
       >
         <Container maxWidth="xl">
-          <Stack spacing={3}>
+          <Stack spacing={1}>
             <Stack
               direction="row"
               justifyContent="space-between"

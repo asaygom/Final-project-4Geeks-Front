@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Stack, Button, Box, Container, Unstable_Grid2 as Grid, Typography } from '@mui/material';
 import EquipmentCard from '../components/EquipmentCard';
 import { TopNav } from '../components/TopNav';
@@ -18,11 +18,11 @@ function Equipment() {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 5
+          py: 2
         }}
       >
         <Container maxWidth="xl">
-          <Stack spacing={3}>
+          <Stack spacing={1}>
               <Stack
               direction="row"
               justifyContent="space-between"
@@ -45,7 +45,7 @@ function Equipment() {
               <SearchBar />
               <Grid
               container
-              spacing={3}
+              spacing={1}
               >
                 {store.listOfEquipments.data?.map((equipment,index)=>{
                   return <Grid onClick={()=>navigate("/equipment_info/"+equipment.id)} key={index} xs={6} sm={6} lg={3}>

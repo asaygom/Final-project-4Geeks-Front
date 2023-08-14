@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Button, Box, Container, Unstable_Grid2 as Grid, Typography } from '@mui/material';
+import { Stack, Button, Box, Container, Unstable_Grid2 as Grid, Typography } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import BottomNav from '../components/BottomNav';
 import { Context } from "../store/context";
@@ -13,10 +13,14 @@ function EquipmentInfo(props) {
 
   return(
     <>
-    <Box sx={{alignContent: 'space-between'}}>
+      <Stack
+      direction="row"
+      justifyContent="space-between"
+      spacing={4}
+      >
         <Button onClick={()=>navigate("/equipment")} variant="text" size="small">Back</Button>
         <Button onClick={()=>navigate("/set_equipment/"+store.equipment.id)} variant="text" size="small">Edit</Button>
-    </Box>
+      </Stack>
     <Box
       component="main"
       sx={{
