@@ -58,6 +58,9 @@ export default function Signup() {
                 password: store.user.password,
                 role: store.user.role,
                 is_active: store.user.is_active,
+                trainer_id: "",
+                subscription_date: new Date().toISOString(),
+                photo_link: "",
               });
             }}
             noValidate
