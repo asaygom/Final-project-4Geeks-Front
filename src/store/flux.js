@@ -17,9 +17,10 @@ const getState = ({ setStore, getStore, getActions }) => {
         description: "",
         status: "",
         is_active: true,
+        photo_link: ""
       },
       listOfEquipments: [],
-      toke: null
+      token: null
     },
     actions: {
       getUsers: () => {
@@ -75,6 +76,7 @@ const getState = ({ setStore, getStore, getActions }) => {
             description: "",
             status: "",
             is_active: false,
+            photo_link: ""
           },
         });
       },
@@ -85,6 +87,7 @@ const getState = ({ setStore, getStore, getActions }) => {
             description: "",
             status: "",
             is_active: false,
+            photo_link: ""
           },
         });
       },
@@ -117,7 +120,6 @@ const getState = ({ setStore, getStore, getActions }) => {
         .catch((error)=>console.log(error))
     },
       newUser: (nu) => {
-        console.log(JSON.stringify(nu));
         fetch("http://localhost:5000/user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -135,20 +137,22 @@ const getState = ({ setStore, getStore, getActions }) => {
             [fieldName]: e.target.value,
           },
         });
-
-        console.log(store, fieldName);
       },
       login: (event) => {
         event.preventDefault();
         const store = getStore();
-        console.log(store.user)
         fetch("http://localhost:5000/login",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(store.user),
           })
           .then((response) => response.json())
-          .then((data) => sessionStorage.setItem("token", data.access_token))
+          .then((data) => {return(
+          sessionStorage.setItem("token", data.access_token),
+          setStore({
+            token: data.access_token
+          }))}
+          )
           .catch((error) => console.log(error));
       },
       handleChangeLogin: (event) => {
@@ -159,6 +163,24 @@ const getState = ({ setStore, getStore, getActions }) => {
             [event.target.name]: event.target.value,
           }
         });
+      },
+      syncTokenFromSessionStorage: () => {
+        const token = sessionStorage.getItem("token");
+        if(token && token!=="" && token!==undefined){setStore({token: token})}
+      },
+      logout: () => {
+        sessionStorage.removeItem("token");
+        setStore({token: null})
+      },
+      getUserInfo: () => {
+        const store = getStore();
+        fetch("http://localhost:5000/userinfo", {
+          method: "GET",
+          headers: { "Authorization": "Bearer "+ store.token}
+        })
+          .then((response) => response.json())
+          .then((data) => setStore({ user: data }))
+          .catch((error) => console.log(error));
       }
     },
   };

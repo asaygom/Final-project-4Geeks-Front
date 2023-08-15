@@ -1,9 +1,19 @@
+import { useContext, useEffect } from "react";
 import { Button,Typography, Avatar, Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
 import BottomNav from '../components/BottomNav';
+import {useNavigate, useParams} from "react-router-dom";
+import { Context } from "../store/context";
 
-const Profile = () => (
+const Profile = (props) => {
+  const { store, actions } = useContext(Context);
+  const navigate=useNavigate()
+  const {id} = useParams()
+  useEffect(()=>{actions.getUserInfo()},[])
+
+
+  return (
   <>
-    <Button variant="text" size="small">Back</Button>
+    <Button onClick={()=>navigate('/home')} variant="text" size="small">Back</Button>
     <Box
       component="main"
       sx={{
@@ -27,7 +37,7 @@ const Profile = () => (
                 width: 200,
                 margin: 'auto'
               }}
-              src="/assets/avatars/avatar-anika-visser.png"
+              src={store.user.photo_link}
             />
             <Box sx={{textAlign: 'center'}}>
             <Typography
@@ -41,7 +51,7 @@ const Profile = () => (
               gutterBottom
               variant="h5"
             >
-              John Doe
+              {store.user.name +" "+ store.user.last_name}
             </Typography>
             </Box>
           </Grid>
@@ -60,13 +70,13 @@ const Profile = () => (
               gutterBottom
               variant="h6"
             >
-              Status
+              {store.user.is_active ? "Status: Active": "Status: Not active"}
             </Typography>
             <Typography
               gutterBottom
               variant="h6"
             >
-              Since
+              {"Since: "+store.user.subscription_date}
             </Typography>
           </Grid>
           <Grid
@@ -80,18 +90,20 @@ const Profile = () => (
             >
               Change password
             </Typography>
+            <Button onClick={()=>{actions.logout(); navigate('/')}}>
             <Typography
               gutterBottom
               variant="h6"
             >
               Logout
             </Typography>
+            </Button>
           </Grid>
         </Grid>
       </Container>
     </Box>
     <BottomNav />
   </>
-);
+)};
 
 export default Profile;

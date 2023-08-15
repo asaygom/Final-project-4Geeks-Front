@@ -49,7 +49,7 @@ function Equipment() {
               >
                 {store.listOfEquipments.data?.map((equipment,index)=>{
                   return <Grid onClick={()=>navigate("/equipment_info/"+equipment.id)} key={index} xs={6} sm={6} lg={3}>
-                    <EquipmentCard id={equipment.id} equipment_name={equipment.name} equipment_img="https://www.bestusedgymequipment.com/wp-content/uploads/2020/09/cybex-vr2-chestpress-1-1.jpg"/>
+                    <EquipmentCard id={equipment.id} equipment_name={equipment.name} equipment_img={equipment.photo_link}/>
                     </Grid>})}
               </Grid>
           </Stack>
