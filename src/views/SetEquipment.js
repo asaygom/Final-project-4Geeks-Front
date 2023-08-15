@@ -20,7 +20,9 @@ export default function SetEquipment() {
     const navigate=useNavigate()
     const {id} = useParams()
     useEffect(() => {
-        if (id === "new") {}
+        if (id === "new") {
+            actions.cleanEquipmentInfo()
+        }
         else {
             actions.getEquipmentInfo(id);
         }
@@ -123,7 +125,7 @@ export default function SetEquipment() {
                   <Typography component="h1" variant="h5">
                   Edit equipment info
                   </Typography>
-                  <Box component="form" noValidate onSubmit={actions.updateEquipmentInfo} sx={{ mt: 3 }}>
+                  <Box component="form" noValidate onSubmit={(event)=>actions.updateEquipmentInfo(event,id)} sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
                       <Grid item xs={12}>
                       <TextField

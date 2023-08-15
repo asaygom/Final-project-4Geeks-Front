@@ -78,6 +78,16 @@ const getState = ({ setStore, getStore, getActions }) => {
           },
         });
       },
+      cleanEquipmentInfo: ()=>{
+        setStore({
+          equipment: {
+            name: "",
+            description: "",
+            status: "",
+            is_active: false,
+          },
+        });
+      },
      getEquipmentInfo: (id) => {
         fetch("http://localhost:5000/equipment/"+id, {
           method: "GET",
@@ -130,10 +140,12 @@ const getState = ({ setStore, getStore, getActions }) => {
       },
       login: (event) => {
         event.preventDefault();
+        const store = getStore();
+        console.log(store.user)
         fetch("http://localhost:5000/login",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(),
+            body: JSON.stringify(store.user),
           })
           .then((response) => response.json())
           .then((data) => sessionStorage.setItem("token", data.access_token))
