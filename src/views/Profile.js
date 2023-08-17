@@ -80,7 +80,7 @@ const Profile = () => {
     </>
   )}
 
-  if (store.user.role==="member"){
+  if (store.user.role==="member" || store.trainer){
     return (
     <>
       <Button onClick={()=>navigate('/home')} variant="text" size="small">Back</Button>
@@ -130,6 +130,8 @@ const Profile = () => {
               sm={6}
               lg={3}
             >
+              {store.trainer.name!=="" ? null :
+              <>
               <Typography
                 gutterBottom
                 variant="h6"
@@ -147,7 +149,7 @@ const Profile = () => {
                 variant="h6"
               >
                 {"Since: "+store.user.subscription_date}
-              </Typography>
+              </Typography></> }
             </Grid>
             <Grid
               xs={12}

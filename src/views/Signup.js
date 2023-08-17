@@ -6,24 +6,20 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../store/context";
 import { useNavigate } from "react-router-dom";
-
-const isactivevalue = [
-  {
-    value: true,
-    label: "Yes",
-  },
-  {
-    value: false,
-    label: "No",
-  },
-];
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import { Grid } from "@mui/material";
 
 export default function Signup() {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+  const [userType, setUserType] = useState("")
+  const handleChange = (event) => {
+		setUserType(event.target.value)
+	}
 
   return (
     <>
@@ -38,29 +34,34 @@ export default function Signup() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
           <Typography component="h1" variant="h5">
-            Create a new User
+            Sign up form
           </Typography>
+          <Grid sx={{marginTop: 3, textAlign: 'center'}}>
+          <InputLabel id="user_type_label">Type of user to create</InputLabel>
+              <Select
+                name='user_type'
+                labelId="user_type_label"
+                id="user_type"
+                value={userType}
+                label="User type"
+                displayEmpty
+                onChange={(event) => handleChange(event)}
+                >
+                  <MenuItem value=""><em>Select type of user to create</em></MenuItem>
+                  <MenuItem value='member'>Member or Admin</MenuItem>
+                  <MenuItem value='trainer'>Trainer</MenuItem>
+                </Select>
+          </Grid>
           <Box
             component="form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              actions.newUser({
-                name: store.user.name,
-                last_name: store.user.last_name,
-                email: store.user.email,
-                password: store.user.password,
-                role: store.user.role,
-                is_active: store.user.is_active,
-                subscription_date: new Date().toISOString(),
-              });
-            }}
+            onSubmit={userType==="member" ? (event) => {actions.signupUser(event)} : userType==="trainer" ? (event) => {actions.signupTrainer(event)} : null}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -73,7 +74,8 @@ export default function Signup() {
               name="name"
               autoComplete="name"
               autoFocus
-              onChange={(e) => actions.handleOnChange(e, "name")}
+              onChange={userType==="member" ? (event) => actions.handleChangeUser(event) : userType==="trainer" ? (event) => actions.handleChangeTrainer(event) : null}
+              value={userType==="member" ? store.user.name : userType==="trainer" ? store.trainer.name : null}
             />
             <TextField
               margin="normal"
@@ -83,8 +85,8 @@ export default function Signup() {
               label="Last Name"
               name="last_name"
               autoComplete="last_name"
-              autoFocus
-              onChange={(e) => actions.handleOnChange(e, "last_name")}
+              onChange={userType==="member" ? (event) => actions.handleChangeUser(event) : userType==="trainer" ? (event) => actions.handleChangeTrainer(event) : null}
+              value={userType==="member" ? store.user.last_name : userType==="trainer" ? store.trainer.last_name : null}
             />
             <TextField
               margin="normal"
@@ -94,8 +96,8 @@ export default function Signup() {
               label="Email"
               name="email"
               autoComplete="email"
-              autoFocus
-              onChange={(e) => actions.handleOnChange(e, "email")}
+              onChange={userType==="member" ? (event) => actions.handleChangeUser(event) : userType==="trainer" ? (event) => actions.handleChangeTrainer(event) : null}
+              value={userType==="member" ? store.user.email : userType==="trainer" ? store.trainer.email : null}
             />
             <TextField
               margin="normal"
@@ -105,44 +107,33 @@ export default function Signup() {
               label="Password"
               name="password"
               autoComplete="password"
-              autoFocus
-              onChange={(e) => actions.handleOnChange(e, "password")}
+              onChange={userType==="member" ? (event) => actions.handleChangeUser(event) : userType==="trainer" ? (event) => actions.handleChangeTrainer(event) : null}
+              value={userType==="member" ? store.user.password : userType==="trainer" ? store.trainer.password : null}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="roel"
-              label="Role"
-              name="role"
-              autoComplete="role"
-              autoFocus
-              onChange={(e) => actions.handleOnChange(e, "role")}
-            />
-
-            <TextField
-              margin="normal"
-              fullWidth
-              id="outlined-select-currency"
-              select
-              label="Is active?"
-              defaultValue="No"
-              helperText="Select if the new user will be active (select 'NO' for tests)"
-            >
-              {isactivevalue.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-
+            {userType==="trainer" ? null : 
+            <><InputLabel id="user_role_label">Role</InputLabel>
+              <Select
+                name='role'
+                labelId="user_role_label"
+                id="user_role"
+                value={store.user.role}
+                label="Role"
+                displayEmpty
+                onChange={(event) => actions.handleChangeUser(event)}
+                >
+                  <MenuItem value=""><em>Select role</em></MenuItem>
+                  <MenuItem value='admin'>Admin</MenuItem>
+                  <MenuItem value='member'>Member</MenuItem>
+                </Select>
+                </>
+            }
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Create User
+              Create user
             </Button>
           </Box>
         </Box>

@@ -20,7 +20,7 @@ export default function BottomNav(){
         </BottomNavigation>
         </Paper>
     )}
-  if (store.user.role==="member"){
+  if (store.user.role==="member" || store.trainer){
     return(
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <BottomNavigation
@@ -28,7 +28,7 @@ export default function BottomNav(){
         >
           <BottomNavigationAction onClick={()=>navigate('/home')} label="Home"  />
           <BottomNavigationAction label="Training plan"  />
-          <BottomNavigationAction label="Routines"  />
+          <BottomNavigationAction onClick={()=>navigate('/routines')} label="Routines"  />
           <BottomNavigationAction label="Exercises"  />
         </BottomNavigation>
         </Paper>

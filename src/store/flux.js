@@ -8,8 +8,8 @@ const getState = ({ setStore, getStore, getActions }) => {
         password: "",
         role: "",
         trainer_id: "",
-        is_active: false,
-        subscription_date: "",
+        is_active: true,
+        subscription_date: ""
       },
       listOfUsers: [],
       equipment: {
@@ -17,12 +17,22 @@ const getState = ({ setStore, getStore, getActions }) => {
         description: "",
         status: "",
         is_active: true,
-        photo_link: "",
+        photo_link: ""
       },
       listOfEquipments: [],
       token: null,
       listOfExercises: [],
       trainingPlanList: [],
+      trainer: {
+        name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        // role: "",
+        is_active: true,
+        attendance: false
+      },
+      listOfTrainers: []
     },
     actions: {
       getUsers: () => {
@@ -31,7 +41,7 @@ const getState = ({ setStore, getStore, getActions }) => {
           headers: { "Content-Type": "application/json" },
         })
           .then((response) => response.json())
-          .then((data) => setStore({ listOfUsers: data }))
+          .then((data) => setStore({ listOfUsers: data.data }))
           .catch((error) => console.log(error));
       },
       getEquipment: () => {
@@ -40,7 +50,7 @@ const getState = ({ setStore, getStore, getActions }) => {
           headers: { "Content-Type": "application/json" },
         })
           .then((response) => response.json())
-          .then((data) => setStore({ listOfEquipments: data }))
+          .then((data) => setStore({ listOfEquipments: data.data }))
           .catch((error) => console.log(error));
       },
       handleChangeEquipment: (event) => {
@@ -50,14 +60,14 @@ const getState = ({ setStore, getStore, getActions }) => {
             equipment: {
               ...store.equipment,
               [event.target.name]: event.target.checked,
-            },
+            }
           });
         } else {
           setStore({
             equipment: {
               ...store.equipment,
               [event.target.name]: event.target.value,
-            },
+            }
           });
         }
       },
@@ -81,7 +91,7 @@ const getState = ({ setStore, getStore, getActions }) => {
             status: "",
             is_active: false,
             photo_link: "",
-          },
+          }
         });
       },
       cleanEquipmentInfo: () => {
@@ -92,7 +102,7 @@ const getState = ({ setStore, getStore, getActions }) => {
             status: "",
             is_active: false,
             photo_link: "",
-          },
+          }
         });
       },
       getEquipmentInfo: (id) => {
@@ -124,22 +134,36 @@ const getState = ({ setStore, getStore, getActions }) => {
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
       },
-      newUser: (nu) => {
+      signupUser: (event) => {
+        event.preventDefault();
+        const store = getStore();
         fetch("http://localhost:5000/user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(nu),
+          body: JSON.stringify(store.user),
         })
           .then((response) => response.json())
-          .then((data) => setStore({ listOfUsers: data }))
+          .then((data) => console.log(data))
           .catch((error) => console.log(error));
+        setStore({
+          user:  {
+            name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            role: "",
+            trainer_id: "",
+            is_active: true,
+            subscription_date: ""
+          }
+        })
       },
-      handleOnChange: (e, fieldName) => {
+      handleChangeUser: (event) => {
         const store = getStore();
         setStore({
           user: {
             ...store.user,
-            [fieldName]: e.target.value,
+            [event.target.name]: event.target.value,
           },
         });
       },
@@ -173,7 +197,39 @@ const getState = ({ setStore, getStore, getActions }) => {
           },
         });
       },
+      trainerLogin: (event) => {
+        event.preventDefault();
+        const store = getStore();
+        fetch("http://localhost:5000/trainer_login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(store.trainer),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            return (
+              sessionStorage.setItem("token", data.access_token),
+              sessionStorage.setItem("user", JSON.stringify(data.user)),
+              setStore({
+                token: data.access_token,
+                trainer: data.user,
+              }),
+              console.log(store.trainer.name)
+            );
+          })
+          .catch((error) => console.log(error));
+      },
+      handleChangeTrainerLogin: (event) => {
+        const store = getStore();
+        setStore({
+          trainer: {
+            ...store.trainer,
+            [event.target.name]: event.target.value,
+          },
+        });
+      },
       syncTokenFromSessionStorage: () => {
+        const token = sessionStorage.getItem("token");
         const user = JSON.parse(sessionStorage.getItem("user"));
         if (token && token !== "" && token !== undefined) {
           setStore({ token: token, user: user });
@@ -184,7 +240,6 @@ const getState = ({ setStore, getStore, getActions }) => {
         sessionStorage.removeItem("user");
         setStore({ token: null });
       },
-
       getUserInfo: () => {
         const store = getStore();
         fetch("http://localhost:5000/userinfo", {
@@ -221,6 +276,38 @@ const getState = ({ setStore, getStore, getActions }) => {
           // .then(() => console.log()
           .catch((error) => console.log(error));
       },
+      signupTrainer: (event) => {
+        event.preventDefault();
+        const store = getStore();
+        fetch("http://localhost:5000/trainer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(store.trainer),
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+        setStore({
+          trainer:  {
+            name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            // role: "",
+            is_active: true,
+            attendance: false
+          }
+        })
+      },
+      handleChangeTrainer: (event) => {
+        const store = getStore();
+        setStore({
+          trainer: {
+            ...store.trainer,
+            [event.target.name]: event.target.value,
+          }
+        });
+      }
     },
   };
 };
