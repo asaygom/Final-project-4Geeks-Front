@@ -149,8 +149,10 @@ const getState = ({ setStore, getStore, getActions }) => {
           .then((response) => response.json())
           .then((data) => {return(
           sessionStorage.setItem("token", data.access_token),
+          sessionStorage.setItem("user", JSON.stringify(data.user)),
           setStore({
-            token: data.access_token
+            token: data.access_token,
+            user: data.user
           }))}
           )
           .catch((error) => console.log(error));
@@ -166,21 +168,13 @@ const getState = ({ setStore, getStore, getActions }) => {
       },
       syncTokenFromSessionStorage: () => {
         const token = sessionStorage.getItem("token");
-        if(token && token!=="" && token!==undefined){setStore({token: token})}
+        const user = JSON.parse(sessionStorage.getItem("user"));
+        if(token && token!=="" && token!==undefined){setStore({token: token, user: user})}
       },
       logout: () => {
         sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
         setStore({token: null})
-      },
-      getUserInfo: () => {
-        const store = getStore();
-        fetch("http://localhost:5000/userinfo", {
-          method: "GET",
-          headers: { "Authorization": "Bearer "+ store.token}
-        })
-          .then((response) => response.json())
-          .then((data) => setStore({ user: data }))
-          .catch((error) => console.log(error));
       }
     },
   };
