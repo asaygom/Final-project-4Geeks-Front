@@ -12,6 +12,10 @@ import Equipment from './views/Equipment';
 import SetEquipment from './views/SetEquipment';
 import Signup from "./views/Signup";
 import EquipmentInfo from './views/EquipmentInfo';
+import Exercise from './views/Exercise';
+import SetExercise from './views/SetExercise';
+import ExerciseInfo from './views/ExerciseInfo';
+
 
 
 function App() {
@@ -29,6 +33,9 @@ function App() {
         <Route path='/set_equipment/:id' element={<SetEquipment />} />
         <Route path="/newuser" element={<Signup />} />
         <Route path='/equipment_info/:id' element={<EquipmentInfo />} />
+        <Route path='/exercise' element={<Exercise />} />
+        <Route path='/set_exercise/:id' element={<SetExercise />} />
+        <Route path='/exercise_info/:id' element={<ExerciseInfo />} />
       </Routes>
     </BrowserRouter>
   );

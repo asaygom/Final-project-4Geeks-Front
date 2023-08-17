@@ -20,6 +20,19 @@ const getState = ({ setStore, getStore, getActions }) => {
         photo_link: ""
       },
       listOfEquipments: [],
+      exercise: {
+        name: "",
+        description: "",
+        sets: 0,
+        repetitions: 0,
+        weight: 0,
+        is_completed: false,
+        equipment_id: null,
+        equipment_issue: "",
+        routine_id: null,
+        photo_link: ""
+      },
+      listOfExercises: [],
       token: null
     },
     actions: {
@@ -118,7 +131,113 @@ const getState = ({ setStore, getStore, getActions }) => {
         }).then((response)=> response.json())
         .then((data)=>console.log(data))
         .catch((error)=>console.log(error))
-    },
+      },
+
+
+      getExercise: () => {
+        fetch("http://localhost:5000/exercise", { // Cambiado el endpoint a "/exercise"
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        })
+        .then((response) => response.json())
+        .then((data) => setStore({ listOfExercises: data })) // Cambiado a "listOfExercises"
+        .catch((error) => console.log(error));
+      },
+
+      handleChangeExercise: (event) => {
+        const store = getStore();
+        if (event.target.name === "is_completed") {setStore({
+          exercise: {
+            ...store.exercise,
+            [event.target.name]: event.target.checked,
+                },
+            });
+        } else {
+            setStore({
+                exercise: {
+                    ...store.exercise,
+                    [event.target.name]: event.target.value,
+              },
+            });}
+      },
+  
+
+      handleSubmitExercise: (event) => {
+        event.preventDefault();
+        const store = getStore();
+        if (store.exercise) {
+            fetch("http://localhost:5000/exercise", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(store.exercise) 
+            })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((error) => console.log(error));
+        }
+        setStore({
+            exercise: { 
+                name: "",
+                description: "",
+                sets: "",
+                repetitions: "",
+                weight: "",
+                is_completed: false,
+                equipment_id: "",
+                equipment_issue: "",
+                routine_id: "",
+                photo_link: ""
+            },
+        });
+      },
+
+
+      cleanExerciseInfo: () => {
+        setStore({
+            exercise: {
+                name: "",
+                description: "",
+                sets: "",
+                repetitions: "",
+                weight: "",
+                is_completed: false,
+                equipment_id: "",
+                equipment_issue: "",
+                routine_id: "",
+                photo_link: ""
+            },
+        });
+      },
+      getExerciseInfo: (id) => {
+          fetch("http://localhost:5000/exercise/" + id, {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+          })
+          .then((response) => response.json())
+          .then((data) => setStore({ exercise: data }))
+          .catch((error) => console.log(error));
+      },
+      updateExerciseInfo: (event, id) => {
+          event.preventDefault();
+          const store = getStore();
+          fetch("http://localhost:5000/exercise/" + id, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(store.exercise)
+          })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      },
+      deleteExercise: (id) => {
+          fetch("http://localhost:5000/exercise/" + id, {
+              method: "DELETE",
+          }).then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      },
+    
+
       newUser: (nu) => {
         fetch("http://localhost:5000/user", {
           method: "POST",
