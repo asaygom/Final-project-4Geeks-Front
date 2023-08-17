@@ -4,6 +4,7 @@ import BottomNav from '../components/BottomNav';
 import { SearchBar } from '../components/SearchBar';
 import { UserTable } from '../components/UserTable';
 import { Context } from "../store/context";
+import {useNavigate} from "react-router-dom";
 
 const data = []
 
@@ -66,6 +67,7 @@ const useSelection = (items = []) => {
 const MembersList = () => {
   const { store, actions } = useContext(Context);
   useEffect(()=>{actions.getUsers()},[])
+  const navigate=useNavigate()
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const users = useUsers(page, rowsPerPage);
@@ -88,7 +90,7 @@ const MembersList = () => {
 
 return(  
   <>
-    <Button variant="text" size="small">Back</Button>
+    <Button onClick={()=>navigate('/home')} variant="text" size="small">Back</Button>
     <Box
         component="main"
         sx={{
@@ -101,7 +103,7 @@ return(
             <Stack
               direction="row"
               justifyContent="space-between"
-              spacing={4}
+              spacing={2}
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
@@ -110,6 +112,7 @@ return(
               </Stack>
               <div>
                 <Button
+                  onClick={()=>navigate('/newuser')}
                   variant="contained"
                 >
                   Add

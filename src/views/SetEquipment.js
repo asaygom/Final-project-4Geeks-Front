@@ -20,7 +20,9 @@ export default function SetEquipment() {
     const navigate=useNavigate()
     const {id} = useParams()
     useEffect(() => {
-        if (id === "new") {}
+        if (id === "new") {
+            actions.cleanEquipmentInfo()
+        }
         else {
             actions.getEquipmentInfo(id);
         }
@@ -43,7 +45,7 @@ export default function SetEquipment() {
                   <Typography component="h1" variant="h5">
                   New equipment
                   </Typography>
-                  <Box component="form" noValidate onSubmit={actions.handleSubmitEquipment} sx={{ mt: 3 }}>
+                  <Box component="form" noValidate onSubmit={(event)=>{actions.handleSubmitEquipment(event);navigate('/equipment')}} sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
                       <Grid item xs={12}>
                       <TextField
@@ -89,6 +91,16 @@ export default function SetEquipment() {
                       <FormControlLabel
                           control={<Checkbox name='is_active' checked={store.equipment.is_active} onChange={actions.handleChangeEquipment} color="primary" />}
                           label="Active"
+                      />
+                      </Grid>
+                      <Grid item xs={12}>
+                      <TextField
+                          name="photo_link"
+                          value={store.equipment.photo_link}
+                          onChange={actions.handleChangeEquipment}
+                          fullWidth
+                          id="photo_link"
+                          label="Image url"
                       />
                       </Grid>
                   </Grid>
@@ -123,7 +135,7 @@ export default function SetEquipment() {
                   <Typography component="h1" variant="h5">
                   Edit equipment info
                   </Typography>
-                  <Box component="form" noValidate onSubmit={actions.updateEquipmentInfo} sx={{ mt: 3 }}>
+                  <Box component="form" noValidate onSubmit={(event)=>{actions.updateEquipmentInfo(event,id);navigate('/equipment_info/'+store.equipment.id)}} sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
                       <Grid item xs={12}>
                       <TextField
@@ -169,6 +181,16 @@ export default function SetEquipment() {
                       <FormControlLabel
                           control={<Checkbox name='is_active' checked={store.equipment.is_active} onChange={actions.handleChangeEquipment} color="primary" />}
                           label="Active"
+                      />
+                      </Grid>
+                      <Grid item xs={12}>
+                      <TextField
+                          name="photo_link"
+                          value={store.equipment.photo_link}
+                          onChange={actions.handleChangeEquipment}
+                          fullWidth
+                          id="photo_link"
+                          label="Image url"
                       />
                       </Grid>
                   </Grid>

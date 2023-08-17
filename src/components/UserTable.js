@@ -28,13 +28,7 @@ export const UserTable = (props) => {
                   Role
                 </TableCell>
                 <TableCell>
-                  Trainer
-                </TableCell>
-                <TableCell>
                   Active
-                </TableCell>
-                <TableCell>
-                  Subscription date
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -55,16 +49,10 @@ export const UserTable = (props) => {
                       {user.email}
                     </TableCell>
                     <TableCell>
-                      {user.role}
+                      {user.role==="admin"?"Admin":user.role==="member"?"Member": null}
                     </TableCell>
                     <TableCell>
-                      {user.trainer_id}
-                    </TableCell>
-                    <TableCell>
-                      {user.is_active}
-                    </TableCell>
-                    <TableCell>
-                      {user.subscription_date}
+                      {user.is_active ? "Yes" : "No"}
                     </TableCell>
                   </TableRow>
                 );

@@ -17,9 +17,12 @@ const getState = ({ setStore, getStore, getActions }) => {
         description: "",
         status: "",
         is_active: true,
+        photo_link: "",
       },
       listOfEquipments: [],
-      toke: null
+      token: null,
+      listOfExercises: [],
+      trainingPlanList: [],
     },
     actions: {
       getUsers: () => {
@@ -65,7 +68,7 @@ const getState = ({ setStore, getStore, getActions }) => {
           fetch("http://localhost:5000/equipment", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(store.equipment)
+            body: JSON.stringify(store.equipment),
           })
             .then((response) => response.json())
             .then((data) => console.log(data))
@@ -77,6 +80,18 @@ const getState = ({ setStore, getStore, getActions }) => {
             description: "",
             status: "",
             is_active: false,
+            photo_link: "",
+          },
+        });
+      },
+      cleanEquipmentInfo: () => {
+        setStore({
+          equipment: {
+            name: "",
+            description: "",
+            status: "",
+            is_active: false,
+            photo_link: "",
           },
         });
       },
@@ -110,8 +125,7 @@ const getState = ({ setStore, getStore, getActions }) => {
           .catch((error) => console.log(error));
       },
       newUser: (nu) => {
-        console.log(JSON.stringify(nu));
-        fetch("http://localhost:5000/register", {
+        fetch("http://localhost:5000/user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(nu),
@@ -128,18 +142,24 @@ const getState = ({ setStore, getStore, getActions }) => {
             [fieldName]: e.target.value,
           },
         });
-
-        console.log(store, fieldName);
       },
       login: (event) => {
         event.preventDefault();
-        fetch("http://localhost:5000/login",{
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(),
-          })
+        const store = getStore();
+        fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(store.user),
+        })
           .then((response) => response.json())
-          .then((data) => sessionStorage.setItem("token", data.access_token))
+          .then((data) => {
+            return (
+              sessionStorage.setItem("token", data.access_token),
+              setStore({
+                token: data.access_token,
+              })
+            );
+          })
           .catch((error) => console.log(error));
       },
       handleChangeLogin: (event) => {
@@ -148,9 +168,55 @@ const getState = ({ setStore, getStore, getActions }) => {
           user: {
             ...store.user,
             [event.target.name]: event.target.value,
-          }
+          },
         });
-      }
+      },
+      syncTokenFromSessionStorage: () => {
+        const token = sessionStorage.getItem("token");
+        if (token && token !== "" && token !== undefined) {
+          setStore({ token: token });
+        }
+      },
+      logout: () => {
+        sessionStorage.removeItem("token");
+        setStore({ token: null });
+      },
+      getUserInfo: () => {
+        const store = getStore();
+        fetch("http://localhost:5000/userinfo", {
+          method: "GET",
+          headers: { Authorization: "Bearer " + store.token },
+        })
+          .then((response) => response.json())
+          .then((data) => setStore({ user: data }))
+          .catch((error) => console.log(error));
+      },
+      getExercise: () => {
+        fetch("http://localhost:5000/exercise", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setStore({ listOfExercises: data.data });
+            console.log(data);
+          })
+          // .then(() => console.log()
+          .catch((error) => console.log(error));
+      },
+      getTrainingPlan: () => {
+        fetch("http://localhost:5000/trainigplan", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setStore({ trainingPlanList: data });
+            console.log(data);
+          })
+          // .then(() => console.log()
+          .catch((error) => console.log(error));
+      },
     },
   };
 };

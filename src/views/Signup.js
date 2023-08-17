@@ -1,23 +1,14 @@
 import * as React from "react";
-import { useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
 import { useContext } from "react";
 import { Context } from "../store/context";
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
+import { useNavigate } from "react-router-dom";
 
 const isactivevalue = [
   {
@@ -32,8 +23,17 @@ const isactivevalue = [
 
 export default function Signup() {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <>
+      <Button
+        onClick={() => navigate("/members_list")}
+        variant="text"
+        size="small"
+      >
+        Back
+      </Button>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -58,9 +58,7 @@ export default function Signup() {
                 password: store.user.password,
                 role: store.user.role,
                 is_active: store.user.is_active,
-                trainer_id: "",
                 subscription_date: new Date().toISOString(),
-                photo_link: "",
               });
             }}
             noValidate
@@ -149,6 +147,6 @@ export default function Signup() {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
+    </>
   );
 }
