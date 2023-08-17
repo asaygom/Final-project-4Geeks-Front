@@ -14,7 +14,6 @@ import {useNavigate} from "react-router-dom";
 export default function Login() {
   const { store, actions } = useContext(Context);
   const navigate=useNavigate()
-  console.log(store.token)
   useEffect(()=>{},[store.token])
   
   return (

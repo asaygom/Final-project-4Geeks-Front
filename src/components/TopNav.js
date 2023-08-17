@@ -1,12 +1,15 @@
+import { useContext, useEffect } from "react";
 import PropTypes from 'prop-types';
 import {Avatar, Box, Stack} from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
+import { Context } from "../store/context";
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
 
 export const TopNav = (props) => {
+  const { store, actions } = useContext(Context);
   const navigate=useNavigate()
 
   return (
@@ -40,7 +43,7 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40
               }}
-              src="/assets/avatars/avatar-anika-visser.png"
+              src={store.user.photo_link}
             />
         </Stack>
       </Box>

@@ -155,8 +155,10 @@ const getState = ({ setStore, getStore, getActions }) => {
           .then((data) => {
             return (
               sessionStorage.setItem("token", data.access_token),
+              sessionStorage.setItem("user", JSON.stringify(data.user)),
               setStore({
                 token: data.access_token,
+                user: data.user,
               })
             );
           })
@@ -172,15 +174,17 @@ const getState = ({ setStore, getStore, getActions }) => {
         });
       },
       syncTokenFromSessionStorage: () => {
-        const token = sessionStorage.getItem("token");
+        const user = JSON.parse(sessionStorage.getItem("user"));
         if (token && token !== "" && token !== undefined) {
-          setStore({ token: token });
+          setStore({ token: token, user: user });
         }
       },
       logout: () => {
         sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
         setStore({ token: null });
       },
+
       getUserInfo: () => {
         const store = getStore();
         fetch("http://localhost:5000/userinfo", {
@@ -220,5 +224,4 @@ const getState = ({ setStore, getStore, getActions }) => {
     },
   };
 };
-
 export default getState;
