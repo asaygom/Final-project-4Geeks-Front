@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../store/context";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,12 +9,18 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
 import {useNavigate} from "react-router-dom";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function Login() {
   const { store, actions } = useContext(Context);
   const navigate=useNavigate()
-  console.log(store.token)
+  const [userType, setUserType] = useState("")
+  const handleChange = (event) => {
+		setUserType(event.target.value)
+	}
   useEffect(()=>{},[store.token])
   
   return (
@@ -33,7 +39,23 @@ export default function Login() {
             <Typography component="h1" variant="h3">
               FitnessTracker
             </Typography>
-            <Box component="form" onSubmit={(event)=>actions.login(event)} noValidate sx={{ mt: 1 }}>
+            <Grid sx={{marginTop: 3, textAlign: 'center'}}>
+              <InputLabel id="user_type_label">Type of user to login</InputLabel>
+              <Select
+                name='user_type'
+                labelId="user_type_label"
+                id="user_type"
+                value={userType}
+                label="User type"
+                displayEmpty
+                onChange={(event) => handleChange(event)}
+                >
+                  <MenuItem value=""><em>Select type of user to login</em></MenuItem>
+                  <MenuItem value='member'>Member or Admin</MenuItem>
+                  <MenuItem value='trainer'>Trainer</MenuItem>
+                </Select>
+            </Grid>
+            <Box component="form" onSubmit={userType==="member" ? (event) => {actions.login(event)} : userType==="trainer" ? (event) => {actions.trainerLogin(event)} : null} noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -41,8 +63,8 @@ export default function Login() {
                 id="email"
                 label="Email Address"
                 name="email"
-                value={store.user.email}
-                onChange={actions.handleChangeLogin}
+                value={userType==="member" ? store.user.email : userType==="trainer" ? store.trainer.email : null}
+                onChange={userType==="member" ? (event) => actions.handleChangeLogin(event) : userType==="trainer" ? (event) => actions.handleChangeTrainerLogin(event) : null}
                 autoComplete="email"
                 autoFocus
               />
@@ -54,8 +76,8 @@ export default function Login() {
                 label="Password"
                 name="password"
                 type="password"
-                value={store.user.password}
-                onChange={actions.handleChangeLogin}
+                value={userType==="member" ? store.user.password : userType==="trainer" ? store.trainer.password : null}
+                onChange={userType==="member" ? (event) => actions.handleChangeLogin(event) : userType==="trainer" ? (event) => actions.handleChangeTrainerLogin(event) : null}
                 autoComplete="current-password"
               />
               <Button

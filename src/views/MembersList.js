@@ -122,7 +122,7 @@ return(
             <SearchBar />
             <UserTable
               count={data.length}
-              items={store.listOfUsers.data}
+              items={store.listOfUsers}
               onDeselectAll={usersSelection.handleDeselectAll}
               onDeselectOne={usersSelection.handleDeselectOne}
               onPageChange={handlePageChange}

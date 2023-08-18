@@ -47,7 +47,7 @@ function Equipment() {
               container
               spacing={1}
               >
-                {store.listOfEquipments.data?.map((equipment,index)=>{
+                {store.listOfEquipments?.map((equipment,index)=>{
                   return <Grid onClick={()=>navigate("/equipment_info/"+equipment.id)} key={index} xs={6} sm={6} lg={3}>
                     <EquipmentCard id={equipment.id} equipment_name={equipment.name} equipment_img={equipment.photo_link}/>
                     </Grid>})}

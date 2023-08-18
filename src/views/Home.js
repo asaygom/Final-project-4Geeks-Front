@@ -1,10 +1,15 @@
+import { useContext, useEffect } from "react";
 import { Box, Container, Unstable_Grid2 as Grid } from '@mui/material';
 import { OverviewGoals } from '../components/OverviewGoals';
 import { OverviewRoutines } from '../components/OverviewRoutines';
 import { TopNav } from '../components/TopNav';
 import BottomNav from '../components/BottomNav';
+import { Context } from "../store/context";
 
-const Home = () => (
+const Home = () => {
+  const { store, actions } = useContext(Context);
+
+  return(
   <>
   <TopNav />
     <Box
@@ -46,6 +51,6 @@ const Home = () => (
     </Box>
     <BottomNav />
   </>
-);
+)};
 
 export default Home;
