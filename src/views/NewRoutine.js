@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Slider from "@mui/material/Slider";
+import Switch from "@mui/material/Switch";
 
 export default function NewRoutine() {
   const { store, actions } = useContext(Context);
@@ -35,6 +36,25 @@ export default function NewRoutine() {
   useEffect(() => {
     actions.getTrainingPlan();
   }, []);
+
+  const [switches, setSwitches] = React.useState([
+    { id: "monday", checked: false },
+    { id: "tuesday", checked: false },
+    { id: "wednesday", checked: false },
+    { id: "thursday", checked: false },
+    { id: "friday", checked: false },
+    { id: "saturday", checked: false },
+    { id: "sunday", checked: false },
+  ]);
+
+  const handleSwitches = (switchID) => {
+    const updateSwitches = switches.map((item) =>
+      item.id === switchID
+        ? { ...item, checked: true }
+        : { ...item, checked: false }
+    );
+    setSwitches(updateSwitches);
+  };
 
   // console.log(store.listOfExercises);
   return (
@@ -62,36 +82,7 @@ export default function NewRoutine() {
             autoComplete="Routine name"
             autoFocus
           />
-          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="monday"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="tuesday"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="wednesday"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="thursday"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="friday"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="saturday"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="sunday"
-            />
-          </Box>
+
           <TextField
             margin="normal"
             fullWidth
@@ -100,13 +91,20 @@ export default function NewRoutine() {
             label="Is Completed?"
             defaultValue="No"
             helperText=""
-          >
-            {isactivevalue.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+          />
+          {switches.map((item) => (
+            <FormControlLabel
+              key={item.id}
+              control={
+                <Switch
+                  checked={item.checked}
+                  onChange={() => handleSwitches(item.id)}
+                />
+              }
+              label={item.id}
+              id={item.id}
+            />
+          ))}
           <TextField
             margin="normal"
             fullWidth
