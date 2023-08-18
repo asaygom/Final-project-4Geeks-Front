@@ -32,8 +32,17 @@ const getState = ({ setStore, getStore, getActions }) => {
         routine_id: null,
         photo_link: ""
       },
-      token: null,
       listOfExercises: [],
+      routine: {
+        name: "",
+        weekday: "",
+        completed_percentage: 0,
+        is_completed: false,
+        is_active: true,
+        training_plan_id: null,
+      },
+      listOfRoutines: [],
+      token: null,
       trainingPlanList: [],
       trainer: {
         name: "",
@@ -160,8 +169,9 @@ const getState = ({ setStore, getStore, getActions }) => {
                 exercise: {
                     ...store.exercise,
                     [event.target.name]: event.target.value,
-              },
-            });}
+              }
+            });
+          }
       },
   
 
@@ -363,13 +373,23 @@ const getState = ({ setStore, getStore, getActions }) => {
           headers: { "Content-Type": "application/json" },
         })
           .then((response) => response.json())
-          .then((data) => {
-            setStore({ listOfExercises: data.data });
+          .then((data) => {setStore({ listOfExercises: data.data });
             console.log(data);
           })
           // .then(() => console.log()
           .catch((error) => console.log(error));
       },
+
+      getRoutine: () => {
+        fetch("http://localhost:5000/routine", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((response) => response.json())
+        .then((data) => setStore({ listOfRoutines: data.data }))
+        .catch((error) => console.log(error));
+      },
+
       getTrainingPlan: () => {
         fetch("http://localhost:5000/trainigplan", {
           method: "GET",
