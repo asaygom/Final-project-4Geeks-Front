@@ -29,7 +29,7 @@ export default function BottomNav(){
           <BottomNavigationAction onClick={()=>navigate('/home')} label="Home"  />
           <BottomNavigationAction label="Training plan"  />
           <BottomNavigationAction onClick={()=>navigate('/routines')} label="Routines"  />
-          <BottomNavigationAction label="Exercises"  />
+          <BottomNavigationAction onClick={()=>navigate('/exercise')} label="Exercises"  />
         </BottomNavigation>
         </Paper>
     )}

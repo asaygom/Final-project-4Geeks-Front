@@ -28,16 +28,15 @@ function App() {
         <Route path="/forgot_password" element={<ForgotPassword />} />
         <Route path="/change_password" element={<ChangePassword />} />
         <Route path="/password_changed" element={<PasswordChanged />} />
+        <Route path="/newuser" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/members_list" element={<MembersList />} />
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/set_equipment/:id" element={<SetEquipment />} />
-        <Route path="/newuser" element={<Signup />} />
         <Route path="/equipment_info/:id" element={<EquipmentInfo />} />
         <Route path="/routines" element={<Routine />} />
         <Route path="/newroutine" element={<NewRoutine />} />
-        <Route path='/equipment_info/:id' element={<EquipmentInfo />} />
         <Route path='/exercise' element={<Exercise />} />
         <Route path='/set_exercise/:id' element={<SetExercise />} />
         <Route path='/exercise_info/:id' element={<ExerciseInfo />} />
