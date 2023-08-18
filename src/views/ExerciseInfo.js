@@ -62,14 +62,33 @@ function ExerciseInfo(props) {
               gutterBottom
               variant="h6"
             >
-              {store.exercise.status === "not_working" ? "Status: Not working" : store.exercise.status ==="working" ? "Status:  Working" : store.exercise.status ==="malfunction" ? "Status:  Malfunction" : null}
+              {"Sets: " + store.exercise.sets}
             </Typography>
             <Typography
               gutterBottom
               variant="h6"
             >
-              {store.exercise.is_active ? "Active" : "Not active"}
+              {"Repetitions: " + store.exercise.repetitions}
             </Typography>
+            <Typography
+              gutterBottom
+              variant="h6"
+            >
+              {"Weight: " + store.exercise.weight}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h6"
+            >
+              {store.exercise.equipment_issue === "minor_issue" ? "Equipment Alert: Minor Issue" : store.exercise.equipment_issue ==="mid_issue" ? "Equipment Alert:  Middle Issue" : store.exercise.equipment_issue ==="mayor_issue" ? "Equipment Alert:  Major Issue" : null}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h6"
+            >
+              {store.exercise.is_completed ? "Completed" : "Not Completed"}
+            </Typography>
+
             <Box sx={{textAlign: 'center', marginBottom:5}}>
                 <img height="300px" src={store.exercise.photo_link} alt={store.exercise.name}/>
             </Box>

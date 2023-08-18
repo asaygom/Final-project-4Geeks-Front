@@ -47,9 +47,9 @@ function Exercise() {
               container
               spacing={1}
               >
-                {store.listOfExercises.data?.map((exercise,index)=>{
+                {store.listOfExercises?.map((exercise,index)=>{
                   return <Grid onClick={()=>navigate("/exercise_info/"+exercise.id)} key={index} xs={6} sm={6} lg={3}>
-                    <ExerciseCard id={exercise.id} exercise_name={exercise.name} exercise_image="https://www.bestusedgymequipment.com/wp-content/uploads/2020/09/cybex-vr2-chestpress-1-1.jpg"/>
+                    <ExerciseCard id={exercise.id} exercise_name={exercise.name} exercise_img={exercise.photo_link}/>
                     </Grid>})}
               </Grid>
           </Stack>
