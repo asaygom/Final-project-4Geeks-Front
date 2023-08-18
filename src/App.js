@@ -14,7 +14,6 @@ import Signup from "./views/Signup";
 import EquipmentInfo from "./views/EquipmentInfo";
 import Routine from "./views/Routine";
 import NewRoutine from "./views/NewRoutine";
-import EquipmentInfo from './views/EquipmentInfo';
 import Exercise from './views/Exercise';
 import SetExercise from './views/SetExercise';
 import ExerciseInfo from './views/ExerciseInfo';

@@ -32,7 +32,6 @@ const getState = ({ setStore, getStore, getActions }) => {
         routine_id: null,
         photo_link: ""
       },
-      listOfExercises: [],
       token: null,
       listOfExercises: [],
       trainingPlanList: [],
@@ -147,17 +146,6 @@ const getState = ({ setStore, getStore, getActions }) => {
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
         },
-
-
-      getExercise: () => {
-        fetch("http://localhost:5000/exercise", { // Cambiado el endpoint a "/exercise"
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-        })
-        .then((response) => response.json())
-        .then((data) => setStore({ listOfExercises: data })) // Cambiado a "listOfExercises"
-        .catch((error) => console.log(error));
-      },
 
       handleChangeExercise: (event) => {
         const store = getStore();
