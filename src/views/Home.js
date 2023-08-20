@@ -8,6 +8,7 @@ import { Context } from "../store/context";
 
 const Home = () => {
   const { store, actions } = useContext(Context);
+  useEffect(()=>{actions.syncTokenFromSessionStorage()},[])
 
   return(
   <>
@@ -49,7 +50,7 @@ const Home = () => {
         </Grid>
       </Container>
     </Box>
-    <BottomNav />
+    <BottomNav navToggle="home"/>
   </>
 )};
 

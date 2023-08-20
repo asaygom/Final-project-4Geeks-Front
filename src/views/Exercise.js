@@ -55,7 +55,7 @@ function Exercise() {
           </Stack>
         </Container>
       </Box>
-      <BottomNav />
+      <BottomNav navToggle="exercises"/>
     </>
   )
 };

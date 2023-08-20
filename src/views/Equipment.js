@@ -55,7 +55,7 @@ function Equipment() {
           </Stack>
         </Container>
       </Box>
-      <BottomNav />
+      <BottomNav navToggle="equipment"/>
     </>
   )
 };

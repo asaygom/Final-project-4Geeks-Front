@@ -51,11 +51,12 @@ export default function Login() {
                 onChange={(event) => handleChange(event)}
                 >
                   <MenuItem value=""><em>Select type of user to login</em></MenuItem>
-                  <MenuItem value='member'>Member or Admin</MenuItem>
+                  <MenuItem value='member'>Member</MenuItem>
                   <MenuItem value='trainer'>Trainer</MenuItem>
+                  <MenuItem value='admin'>Admin</MenuItem>
                 </Select>
             </Grid>
-            <Box component="form" onSubmit={userType==="member" ? (event) => {actions.login(event)} : userType==="trainer" ? (event) => {actions.trainerLogin(event)} : null} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={userType==="member" || userType==="admin" ? (event) => {actions.login(event)} : userType==="trainer" ? (event) => {actions.trainerLogin(event)} : null} noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -63,8 +64,8 @@ export default function Login() {
                 id="email"
                 label="Email Address"
                 name="email"
-                value={userType==="member" ? store.user.email : userType==="trainer" ? store.trainer.email : null}
-                onChange={userType==="member" ? (event) => actions.handleChangeLogin(event) : userType==="trainer" ? (event) => actions.handleChangeTrainerLogin(event) : null}
+                value={store.userLoggedIn.email}
+                onChange={(event) => actions.handleChangeLogin(event)}
                 autoComplete="email"
                 autoFocus
               />
@@ -76,8 +77,8 @@ export default function Login() {
                 label="Password"
                 name="password"
                 type="password"
-                value={userType==="member" ? store.user.password : userType==="trainer" ? store.trainer.password : null}
-                onChange={userType==="member" ? (event) => actions.handleChangeLogin(event) : userType==="trainer" ? (event) => actions.handleChangeTrainerLogin(event) : null}
+                value={store.userLoggedIn.password}
+                onChange={(event) => actions.handleChangeLogin(event)}
                 autoComplete="current-password"
               />
               <Button

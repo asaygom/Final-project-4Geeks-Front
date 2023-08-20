@@ -8,7 +8,7 @@ const Profile = () => {
   const { store, actions } = useContext(Context);
   const navigate=useNavigate()
   
-  if (store.user.role==="admin"){
+  if (store.userLoggedIn.role==="admin"){
     return (
     <>
       <Button onClick={()=>navigate('/home')} variant="text" size="small">Back</Button>
@@ -35,7 +35,7 @@ const Profile = () => {
                   width: 200,
                   margin: 'auto'
                 }}
-                src={store.user.photo_link}
+                src={store.userLoggedIn.photo_link}
               />
               <Box sx={{textAlign: 'center'}}>
               <Typography
@@ -49,7 +49,7 @@ const Profile = () => {
                 gutterBottom
                 variant="h5"
               >
-                {store.user.name +" "+ store.user.last_name}
+                {store.userLoggedIn.name +" "+ store.userLoggedIn.last_name}
               </Typography>
               </Box>
             </Grid>
@@ -80,7 +80,7 @@ const Profile = () => {
     </>
   )}
 
-  if (store.user.role==="member" || store.trainer){
+  if (store.userLoggedIn.role==="member" || store.trainer){
     return (
     <>
       <Button onClick={()=>navigate('/home')} variant="text" size="small">Back</Button>
@@ -107,7 +107,7 @@ const Profile = () => {
                   width: 200,
                   margin: 'auto'
                 }}
-                src={store.user.photo_link}
+                src={store.userLoggedIn.photo_link}
               />
               <Box sx={{textAlign: 'center'}}>
               <Typography
@@ -121,7 +121,7 @@ const Profile = () => {
                 gutterBottom
                 variant="h5"
               >
-                {store.user.name +" "+ store.user.last_name}
+                {store.userLoggedIn.name +" "+ store.userLoggedIn.last_name}
               </Typography>
               </Box>
             </Grid>
@@ -136,19 +136,19 @@ const Profile = () => {
                 gutterBottom
                 variant="h6"
               >
-                {store.user.trainer_id ? "Trainer: "+store.user.trainer_id : "Trainer: without trainer"}
+                {store.userLoggedIn.trainer_id ? "Trainer: "+store.userLoggedIn.trainer_id : "Trainer: without trainer"}
               </Typography>
               <Typography
                 gutterBottom
                 variant="h6"
               >
-                {store.user.is_active ? "Status: Active": "Status: Not active"}
+                {store.userLoggedIn.is_active ? "Status: Active": "Status: Not active"}
               </Typography>
               <Typography
                 gutterBottom
                 variant="h6"
               >
-                {"Since: "+store.user.subscription_date}
+                {"Since: "+store.userLoggedIn.subscription_date}
               </Typography></> }
             </Grid>
             <Grid

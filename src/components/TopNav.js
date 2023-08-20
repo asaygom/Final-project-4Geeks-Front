@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import PropTypes from 'prop-types';
 import {Avatar, Box, Stack} from '@mui/material';
 import { alpha } from '@mui/material/styles';
@@ -9,7 +9,7 @@ const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
 
 export const TopNav = (props) => {
-  const { store, actions } = useContext(Context);
+  const { store } = useContext(Context);
   const navigate=useNavigate()
 
   return (
@@ -43,7 +43,7 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40
               }}
-              src={store.user.photo_link}
+              src={store.userLoggedIn.photo_link}
             />
         </Stack>
       </Box>

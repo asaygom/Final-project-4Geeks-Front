@@ -9,7 +9,8 @@ const getState = ({ setStore, getStore, getActions }) => {
         role: "",
         trainer_id: "",
         is_active: true,
-        subscription_date: ""
+        subscription_date: "",
+        photo_link: ""
       },
       listOfUsers: [],
       equipment: {
@@ -49,11 +50,23 @@ const getState = ({ setStore, getStore, getActions }) => {
         last_name: "",
         email: "",
         password: "",
-        // role: "",
+        role: "trainer",
         is_active: true,
         attendance: false
       },
-      listOfTrainers: []
+      listOfTrainers: [],
+      userLoggedIn: {
+        name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        role: "",
+        trainer_id: "",
+        is_active: true,
+        subscription_date: "",
+        photo_link: "",
+        attendance: false
+      }
     },
     actions: {
       getUsers: () => {
@@ -249,8 +262,6 @@ const getState = ({ setStore, getStore, getActions }) => {
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
       },
-    
-
       signupUser: (event) => {
         event.preventDefault();
         const store = getStore();
@@ -290,7 +301,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         fetch("http://localhost:5000/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(store.user),
+          body: JSON.stringify(store.userLoggedIn),
         })
           .then((response) => response.json())
           .then((data) => {
@@ -308,8 +319,8 @@ const getState = ({ setStore, getStore, getActions }) => {
       handleChangeLogin: (event) => {
         const store = getStore();
         setStore({
-          user: {
-            ...store.user,
+          userLoggedIn: {
+            ...store.userLoggedIn,
             [event.target.name]: event.target.value,
           },
         });
@@ -320,7 +331,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         fetch("http://localhost:5000/trainer_login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(store.trainer),
+          body: JSON.stringify(store.userLoggedIn),
         })
           .then((response) => response.json())
           .then((data) => {
@@ -330,8 +341,7 @@ const getState = ({ setStore, getStore, getActions }) => {
               setStore({
                 token: data.access_token,
                 trainer: data.user,
-              }),
-              console.log(store.trainer.name)
+              })
             );
           })
           .catch((error) => console.log(error));
@@ -340,7 +350,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         const store = getStore();
         setStore({
           trainer: {
-            ...store.trainer,
+            ...store.userLoggedIn,
             [event.target.name]: event.target.value,
           },
         });
@@ -349,13 +359,25 @@ const getState = ({ setStore, getStore, getActions }) => {
         const token = sessionStorage.getItem("token");
         const user = JSON.parse(sessionStorage.getItem("user"));
         if (token && token !== "" && token !== undefined) {
-          setStore({ token: token, user: user });
+          setStore({ token: token, userLoggedIn: user });
         }
       },
       logout: () => {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
-        setStore({ token: null });
+        setStore({ token: null, userLoggedIn: {
+          name: "",
+          last_name: "",
+          email: "",
+          password: "",
+          role: "",
+          trainer_id: "",
+          is_active: true,
+          subscription_date: "",
+          photo_link: "",
+          attendance: false
+        } 
+      });
       },
       getUserInfo: () => {
         const store = getStore();
@@ -420,7 +442,7 @@ const getState = ({ setStore, getStore, getActions }) => {
             last_name: "",
             email: "",
             password: "",
-            // role: "",
+            role: "trainer",
             is_active: true,
             attendance: false
           }

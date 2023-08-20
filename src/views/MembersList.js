@@ -136,7 +136,7 @@ return(
           </Stack>
         </Container>
       </Box>
-    <BottomNav />
+    <BottomNav navToggle="users"/>
   </>
 )}
 
