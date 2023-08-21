@@ -5,6 +5,7 @@ import { SearchBar } from '../components/SearchBar';
 import { UserTable } from '../components/UserTable';
 import { Context } from "../store/context";
 import {useNavigate} from "react-router-dom";
+import { TopNav } from '../components/TopNav';
 
 const data = []
 
@@ -66,13 +67,15 @@ const useSelection = (items = []) => {
   
 const MembersList = () => {
   const { store, actions } = useContext(Context);
-  useEffect(()=>{actions.getUsers()},[])
+  useEffect(()=>{actions.getUsers();actions.getTrainers()},[])
   const navigate=useNavigate()
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const users = useUsers(page, rowsPerPage);
     const usersIds = useUserIds(users);
     const usersSelection = useSelection(usersIds);
+    const listOfUsersAndTrainers = store.listOfUsers.concat(store.listOfTrainers)
+    console.log(listOfUsersAndTrainers)
   
     const handlePageChange = useCallback(
       (event, value) => {
@@ -90,7 +93,7 @@ const MembersList = () => {
 
 return(  
   <>
-    <Button onClick={()=>navigate('/home')} variant="text" size="small">Back</Button>
+    <TopNav />
     <Box
         component="main"
         sx={{
@@ -107,7 +110,7 @@ return(
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Members
+                  Users
                 </Typography>
               </Stack>
               <div>
@@ -122,7 +125,7 @@ return(
             <SearchBar />
             <UserTable
               count={data.length}
-              items={store.listOfUsers}
+              items={listOfUsersAndTrainers}
               onDeselectAll={usersSelection.handleDeselectAll}
               onDeselectOne={usersSelection.handleDeselectOne}
               onPageChange={handlePageChange}
@@ -141,4 +144,3 @@ return(
 )}
 
 export default MembersList;
-

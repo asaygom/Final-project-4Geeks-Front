@@ -18,7 +18,7 @@ export default function BottomNav(props){
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <BottomNavigation showLabels >
           {props.navToggle==="home" ? <BottomNavigationAction onClick={()=>navigate('/home')} label="Home" icon={<HomeIcon />} sx={{ color: 'info.dark' }} /> : <BottomNavigationAction onClick={()=>navigate('/home')} label="Home" icon={<HomeIcon />} /> }
-          {props.navToggle==="attendance" ? <BottomNavigationAction label="Attendance" icon={<FactCheckIcon />} sx={{ color: 'info.dark' }} /> : <BottomNavigationAction label="Attendance" icon={<FactCheckIcon />} /> }
+          {props.navToggle==="attendance" ? <BottomNavigationAction onClick={()=>navigate('/attendance')} label="Attendance" icon={<FactCheckIcon />} sx={{ color: 'info.dark' }} /> : <BottomNavigationAction onClick={()=>navigate('/attendance')} label="Attendance" icon={<FactCheckIcon />} /> }
           {props.navToggle==="equipment" ? <BottomNavigationAction onClick={()=>navigate('/equipment')} label="Equipment" icon={<FitnessCenterIcon />} sx={{ color: 'info.dark' }} /> : <BottomNavigationAction onClick={()=>navigate('/equipment')} label="Equipment" icon={<FitnessCenterIcon />} />}
           {props.navToggle==="users" ? <BottomNavigationAction onClick={()=>navigate('/members_list')} label="Users" icon={<PeopleIcon />} sx={{ color: 'info.dark' }} /> : <BottomNavigationAction onClick={()=>navigate('/members_list')} label="Users" icon={<PeopleIcon />} />}
         </BottomNavigation>

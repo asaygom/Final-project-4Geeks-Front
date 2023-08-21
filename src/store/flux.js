@@ -78,6 +78,15 @@ const getState = ({ setStore, getStore, getActions }) => {
           .then((data) => setStore({ listOfUsers: data.data }))
           .catch((error) => console.log(error));
       },
+      getTrainers: () => {
+        fetch("http://localhost:5000/trainer", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((data) => setStore({ listOfTrainers: data.data }))
+          .catch((error) => console.log(error));
+      },
       getEquipment: () => {
         fetch("http://localhost:5000/equipment", {
           method: "GET",

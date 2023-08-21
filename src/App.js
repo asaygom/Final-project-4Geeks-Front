@@ -17,6 +17,7 @@ import NewRoutine from "./views/NewRoutine";
 import Exercise from './views/Exercise';
 import SetExercise from './views/SetExercise';
 import ExerciseInfo from './views/ExerciseInfo';
+import Attendance from "./views/Attendance";
 
 
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/newuser" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/attendance" element={<Attendance />} />
         <Route path="/members_list" element={<MembersList />} />
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/set_equipment/:id" element={<SetEquipment />} />

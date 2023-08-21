@@ -14,7 +14,7 @@ export const UserTable = (props) => {
 
   return (
     <Card>
-        <Box sx={{ minWidth: 800 }}>
+        <Box sx={{ minWidth: 360 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -39,7 +39,7 @@ export const UserTable = (props) => {
                 return (
                   <TableRow
                     hover
-                    key={user.id}
+                    key={user.id+user.email}
                     selected={isSelected}
                   >
                     <TableCell>
@@ -49,7 +49,7 @@ export const UserTable = (props) => {
                       {user.email}
                     </TableCell>
                     <TableCell>
-                      {user.role==="admin"?"Admin":user.role==="member"?"Member": null}
+                      {user.role==="admin"?"Admin":user.role==="member"?"Member":!user.role?"Trainer": null}
                     </TableCell>
                     <TableCell>
                       {user.is_active ? "Yes" : "No"}
