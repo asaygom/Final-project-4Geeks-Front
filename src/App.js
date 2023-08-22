@@ -18,12 +18,23 @@ import Exercise from './views/Exercise';
 import SetExercise from './views/SetExercise';
 import ExerciseInfo from './views/ExerciseInfo';
 import Attendance from "./views/Attendance";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
   return (
     <BrowserRouter>
+    <ToastContainer position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/forgot_password" element={<ForgotPassword />} />

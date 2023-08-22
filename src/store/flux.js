@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const getState = ({ setStore, getStore, getActions }) => {
   return {
     store: {
@@ -10,7 +12,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         trainer_id: "",
         is_active: true,
         subscription_date: "",
-        photo_link: ""
+        photo_link: "",
       },
       listOfUsers: [],
       equipment: {
@@ -18,7 +20,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         description: "",
         status: "",
         is_active: true,
-        photo_link: ""
+        photo_link: "",
       },
       listOfEquipments: [],
       exercise: {
@@ -31,7 +33,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         equipment_id: null,
         equipment_issue: "",
         routine_id: null,
-        photo_link: ""
+        photo_link: "",
       },
       listOfExercises: [],
       routine: {
@@ -52,7 +54,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         password: "",
         role: "trainer",
         is_active: true,
-        attendance: false
+        attendance: false,
       },
       listOfTrainers: [],
       userLoggedIn: {
@@ -65,8 +67,8 @@ const getState = ({ setStore, getStore, getActions }) => {
         is_active: true,
         subscription_date: "",
         photo_link: "",
-        attendance: false
-      }
+        attendance: false,
+      },
     },
     actions: {
       getUsers: () => {
@@ -103,14 +105,14 @@ const getState = ({ setStore, getStore, getActions }) => {
             equipment: {
               ...store.equipment,
               [event.target.name]: event.target.checked,
-            }
+            },
           });
         } else {
           setStore({
             equipment: {
               ...store.equipment,
               [event.target.name]: event.target.value,
-            }
+            },
           });
         }
       },
@@ -134,7 +136,7 @@ const getState = ({ setStore, getStore, getActions }) => {
             status: "",
             is_active: false,
             photo_link: "",
-          }
+          },
         });
       },
       cleanEquipmentInfo: () => {
@@ -145,7 +147,7 @@ const getState = ({ setStore, getStore, getActions }) => {
             status: "",
             is_active: false,
             photo_link: "",
-          }
+          },
         });
       },
       getEquipmentInfo: (id) => {
@@ -176,98 +178,98 @@ const getState = ({ setStore, getStore, getActions }) => {
           .then((response) => response.json())
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
-        },
+      },
 
       handleChangeExercise: (event) => {
         const store = getStore();
-        if (event.target.name === "is_completed") {setStore({
-          exercise: {
-            ...store.exercise,
-            [event.target.name]: event.target.checked,
-                },
-            });
+        if (event.target.name === "is_completed") {
+          setStore({
+            exercise: {
+              ...store.exercise,
+              [event.target.name]: event.target.checked,
+            },
+          });
         } else {
-            setStore({
-                exercise: {
-                    ...store.exercise,
-                    [event.target.name]: event.target.value,
-              }
-            });
-          }
+          setStore({
+            exercise: {
+              ...store.exercise,
+              [event.target.name]: event.target.value,
+            },
+          });
+        }
       },
-  
 
       handleSubmitExercise: (event) => {
         event.preventDefault();
         const store = getStore();
         if (store.exercise) {
-            fetch("http://localhost:5000/exercise", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(store.exercise) 
-            })
+          fetch("http://localhost:5000/exercise", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(store.exercise),
+          })
             .then((response) => response.json())
             .then((data) => console.log(data))
             .catch((error) => console.log(error));
         }
         setStore({
-            exercise: { 
-                name: "",
-                description: "",
-                sets: "",
-                repetitions: "",
-                weight: "",
-                is_completed: false,
-                equipment_id: "",
-                equipment_issue: "",
-                routine_id: "",
-                photo_link: ""
-            },
+          exercise: {
+            name: "",
+            description: "",
+            sets: "",
+            repetitions: "",
+            weight: "",
+            is_completed: false,
+            equipment_id: "",
+            equipment_issue: "",
+            routine_id: "",
+            photo_link: "",
+          },
         });
       },
-
 
       cleanExerciseInfo: () => {
         setStore({
-            exercise: {
-                name: "",
-                description: "",
-                sets: "",
-                repetitions: "",
-                weight: "",
-                is_completed: false,
-                equipment_id: "",
-                equipment_issue: "",
-                routine_id: "",
-                photo_link: ""
-            },
+          exercise: {
+            name: "",
+            description: "",
+            sets: "",
+            repetitions: "",
+            weight: "",
+            is_completed: false,
+            equipment_id: "",
+            equipment_issue: "",
+            routine_id: "",
+            photo_link: "",
+          },
         });
       },
       getExerciseInfo: (id) => {
-          fetch("http://localhost:5000/exercise/" + id, {
-              method: "GET",
-              headers: { "Content-Type": "application/json" },
-          })
+        fetch("http://localhost:5000/exercise/" + id, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
           .then((response) => response.json())
           .then((data) => setStore({ exercise: data }))
           .catch((error) => console.log(error));
       },
       updateExerciseInfo: (event, id) => {
-          event.preventDefault();
-          const store = getStore();
-          fetch("http://localhost:5000/exercise/" + id, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(store.exercise)
-          })
+        event.preventDefault();
+        const store = getStore();
+        fetch("http://localhost:5000/exercise/" + id, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(store.exercise),
+        })
           .then((response) => response.json())
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
       },
       deleteExercise: (id) => {
-          fetch("http://localhost:5000/exercise/" + id, {
-              method: "DELETE",
-          }).then((response) => response.json())
+        fetch("http://localhost:5000/exercise/" + id, {
+          method: "DELETE",
+        })
+          .then((response) => response.json())
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
       },
@@ -280,10 +282,21 @@ const getState = ({ setStore, getStore, getActions }) => {
           body: JSON.stringify(store.user),
         })
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) =>{ 
+          toast.success(data.msg, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          })
+          console.log(data)})
           .catch((error) => console.log(error));
         setStore({
-          user:  {
+          user: {
             name: "",
             last_name: "",
             email: "",
@@ -291,12 +304,13 @@ const getState = ({ setStore, getStore, getActions }) => {
             role: "",
             trainer_id: "",
             is_active: true,
-            subscription_date: ""
-          }
-        })
+            subscription_date: "",
+          },
+        });
       },
       handleChangeUser: (event) => {
         const store = getStore();
+        toast("test")
         setStore({
           user: {
             ...store.user,
@@ -374,19 +388,21 @@ const getState = ({ setStore, getStore, getActions }) => {
       logout: () => {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
-        setStore({ token: null, userLoggedIn: {
-          name: "",
-          last_name: "",
-          email: "",
-          password: "",
-          role: "",
-          trainer_id: "",
-          is_active: true,
-          subscription_date: "",
-          photo_link: "",
-          attendance: false
-        } 
-      });
+        setStore({
+          token: null,
+          userLoggedIn: {
+            name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            role: "",
+            trainer_id: "",
+            is_active: true,
+            subscription_date: "",
+            photo_link: "",
+            attendance: false,
+          },
+        });
       },
       getUserInfo: () => {
         const store = getStore();
@@ -404,7 +420,8 @@ const getState = ({ setStore, getStore, getActions }) => {
           headers: { "Content-Type": "application/json" },
         })
           .then((response) => response.json())
-          .then((data) => {setStore({ listOfExercises: data.data });
+          .then((data) => {
+            setStore({ listOfExercises: data.data });
             console.log(data);
           })
           // .then(() => console.log()
@@ -416,9 +433,9 @@ const getState = ({ setStore, getStore, getActions }) => {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         })
-        .then((response) => response.json())
-        .then((data) => setStore({ listOfRoutines: data.data }))
-        .catch((error) => console.log(error));
+          .then((response) => response.json())
+          .then((data) => setStore({ listOfRoutines: data.data }))
+          .catch((error) => console.log(error));
       },
 
       getTrainingPlan: () => {
@@ -434,28 +451,40 @@ const getState = ({ setStore, getStore, getActions }) => {
           // .then(() => console.log()
           .catch((error) => console.log(error));
       },
-      signupTrainer: (event) => {
+      signupTrainer: (event, notify) => {
         event.preventDefault();
         const store = getStore();
-        fetch("http://localhost:5000/trainer", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(store.trainer),
-        })
-          .then((response) => response.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.log(error));
-        setStore({
-          trainer:  {
-            name: "",
-            last_name: "",
-            email: "",
-            password: "",
-            role: "trainer",
-            is_active: true,
-            attendance: false
-          }
-        })
+          fetch("http://localhost:5000/trainer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(store.trainer),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              toast.success(data.msg, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+              })
+              console.log(data);
+            })
+            .catch((error) => console.log(error));
+          setStore({
+            trainer: {
+              name: "",
+              last_name: "",
+              email: "",
+              password: "",
+              role: "trainer",
+              is_active: true,
+              attendance: false,
+            },
+          });
       },
       handleChangeTrainer: (event) => {
         const store = getStore();
@@ -463,9 +492,9 @@ const getState = ({ setStore, getStore, getActions }) => {
           trainer: {
             ...store.trainer,
             [event.target.name]: event.target.value,
-          }
+          },
         });
-      }
+      },
     },
   };
 };
