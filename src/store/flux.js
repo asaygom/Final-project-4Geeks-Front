@@ -126,8 +126,32 @@ const getState = ({ setStore, getStore, getActions }) => {
             body: JSON.stringify(store.equipment),
           })
             .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.log(error));
+            .then((data) => {
+              toast.success(data.msg, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+              })
+              console.log(data);
+            })
+            .catch((error) => {
+              toast.error(error, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+              })
+              console.log(error);
+            });
         }
         setStore({
           equipment: {
@@ -168,7 +192,19 @@ const getState = ({ setStore, getStore, getActions }) => {
           body: JSON.stringify(store.equipment),
         })
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) => {
+            toast.success(data.msg, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+            console.log(data);
+          })
           .catch((error) => console.log(error));
       },
       deleteEquipment: (id) => {
@@ -176,7 +212,19 @@ const getState = ({ setStore, getStore, getActions }) => {
           method: "DELETE",
         })
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) => {
+            toast.success(data.msg, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+            console.log(data);
+          })
           .catch((error) => console.log(error));
       },
 
@@ -294,7 +342,19 @@ const getState = ({ setStore, getStore, getActions }) => {
             theme: "light"
           })
           console.log(data)})
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            toast.error(error, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+            console.log(error);
+          });
         setStore({
           user: {
             name: "",
@@ -310,7 +370,6 @@ const getState = ({ setStore, getStore, getActions }) => {
       },
       handleChangeUser: (event) => {
         const store = getStore();
-        toast("test")
         setStore({
           user: {
             ...store.user,
@@ -337,7 +396,19 @@ const getState = ({ setStore, getStore, getActions }) => {
               })
             );
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            toast.error(error, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+            console.log(error);
+          });
       },
       handleChangeLogin: (event) => {
         const store = getStore();
@@ -367,7 +438,19 @@ const getState = ({ setStore, getStore, getActions }) => {
               })
             );
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            toast.error(error, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+            console.log(error);
+          });
       },
       handleChangeTrainerLogin: (event) => {
         const store = getStore();
@@ -473,7 +556,19 @@ const getState = ({ setStore, getStore, getActions }) => {
               })
               console.log(data);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+              toast.error(error, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+              })
+              console.log(error);
+            })
           setStore({
             trainer: {
               name: "",

@@ -12,6 +12,12 @@ import { useNavigate } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import { Grid } from "@mui/material";
+import OutlinedInput from '@mui/material/OutlinedInput';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import FormControl from '@mui/material/FormControl';
 
 export default function Signup() {
   const { store, actions } = useContext(Context);
@@ -19,6 +25,12 @@ export default function Signup() {
   const [userType, setUserType] = useState("");
   const handleChange = (event) => {
     setUserType(event.target.value);
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -43,28 +55,11 @@ export default function Signup() {
           <Typography component="h1" variant="h5">
             Sign up form
           </Typography>
-          <Grid sx={{ marginTop: 3, textAlign: "center" }}>
-            <InputLabel id="user_type_label">Type of user to create</InputLabel>
-            <Select
-              name="user_type"
-              labelId="user_type_label"
-              id="user_type"
-              value={userType}
-              label="User type"
-              displayEmpty
-              onChange={(event) => handleChange(event)}
-            >
-              <MenuItem value="">
-                <em>Select type of user to create</em>
-              </MenuItem>
-              <MenuItem value="member">Member or Admin</MenuItem>
-              <MenuItem value="trainer">Trainer</MenuItem>
-            </Select>
-          </Grid>
+          
           <Box
             component="form"
             onSubmit={
-              userType === "member"
+              userType === "member" || userType === "admin"
                 ? (event) => {
                     actions.signupUser(event);
                   }
@@ -74,9 +69,25 @@ export default function Signup() {
                   }
                 : null
             }
-            noValidate
             sx={{ mt: 1 }}
           >
+            <FormControl fullWidth sx={{ marginTop: 3}}>
+          <InputLabel id="user_type_label">Role</InputLabel>
+            <Select
+              required
+              name="user_type"
+              labelId="user_type_label"
+              id="user_type"
+              value={userType}
+              label="User type"
+              displayEmpty
+              onChange={(event) => handleChange(event)}
+            >
+              <MenuItem value="member">Member</MenuItem>
+              <MenuItem value="trainer">Trainer</MenuItem>
+              <MenuItem value="admin">Admin</MenuItem>
+            </Select>
+          </FormControl>
             <TextField
               margin="normal"
               required
@@ -87,14 +98,14 @@ export default function Signup() {
               autoComplete="name"
               autoFocus
               onChange={
-                userType === "member"
+                userType === "member" || userType === "admin"
                   ? (event) => actions.handleChangeUser(event)
                   : userType === "trainer"
                   ? (event) => actions.handleChangeTrainer(event)
                   : null
               }
               value={
-                userType === "member"
+                userType === "member" || userType === "admin"
                   ? store.user.name
                   : userType === "trainer"
                   ? store.trainer.name
@@ -110,14 +121,14 @@ export default function Signup() {
               name="last_name"
               autoComplete="last_name"
               onChange={
-                userType === "member"
+                userType === "member" || userType === "admin"
                   ? (event) => actions.handleChangeUser(event)
                   : userType === "trainer"
                   ? (event) => actions.handleChangeTrainer(event)
                   : null
               }
               value={
-                userType === "member"
+                userType === "member" || userType === "admin"
                   ? store.user.last_name
                   : userType === "trainer"
                   ? store.trainer.last_name
@@ -132,22 +143,25 @@ export default function Signup() {
               label="Email"
               name="email"
               autoComplete="email"
+              type="email"
               onChange={
-                userType === "member"
+                userType === "member" || userType === "admin"
                   ? (event) => actions.handleChangeUser(event)
                   : userType === "trainer"
                   ? (event) => actions.handleChangeTrainer(event)
                   : null
               }
               value={
-                userType === "member"
+                userType === "member" || userType === "admin"
                   ? store.user.email
                   : userType === "trainer"
                   ? store.trainer.email
                   : null
               }
             />
-            <TextField
+            <FormControl fullWidth sx={{ mt: 2 }} variant="outlined">
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <OutlinedInput
               margin="normal"
               required
               fullWidth
@@ -155,41 +169,55 @@ export default function Signup() {
               label="Password"
               name="password"
               autoComplete="password"
+              type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                 }
               onChange={
-                userType === "member"
+                userType === "member" || userType === "admin"
                   ? (event) => actions.handleChangeUser(event)
                   : userType === "trainer"
                   ? (event) => actions.handleChangeTrainer(event)
                   : null
               }
               value={
-                userType === "member"
+                userType === "member" || userType === "admin"
                   ? store.user.password
                   : userType === "trainer"
                   ? store.trainer.password
                   : null
               }
             />
-            {userType === "trainer" ? null : (
-              <>
-                <InputLabel id="user_role_label">Role</InputLabel>
-                <Select
-                  name="role"
-                  labelId="user_role_label"
-                  id="user_role"
-                  value={store.user.role}
-                  label="Role"
-                  displayEmpty
-                  onChange={(event) => actions.handleChangeUser(event)}
-                >
-                  <MenuItem value="">
-                    <em>Select role</em>
-                  </MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
-                  <MenuItem value="member">Member</MenuItem>
-                </Select>
-              </>
-            )}
+            </FormControl>
+            {userType === "member" ? store.user.role="member" : userType === "admin" ? store.user.role="admin" : null
+            // (
+              // <FormControl fullWidth sx={{ mt: 3 }} variant="outlined">
+              //   <InputLabel id="user_role_label">Role</InputLabel>
+              //   <Select
+              //     required
+              //     name="role"
+              //     labelId="user_role_label"
+              //     id="user_role"
+              //     value={store.user.role}
+              //     label="Role"
+              //     displayEmpty
+              //     onChange={(event) => actions.handleChangeUser(event)}
+              //   >
+              //     <MenuItem value="admin">Admin</MenuItem>
+              //     <MenuItem value="member">Member</MenuItem>
+              //   </Select>
+              // </FormControl>
+            // )
+          }
             <Button
               type="submit"
               fullWidth

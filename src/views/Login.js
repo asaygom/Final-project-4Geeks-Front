@@ -13,6 +13,10 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import {useNavigate} from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export default function Login() {
   const { store, actions } = useContext(Context);
@@ -23,6 +27,12 @@ export default function Login() {
 	}
   useEffect(()=>{},[store.token])
   
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       {(store.token && store.token!=="" && store.token!==undefined) ? navigate("/home"):
@@ -42,6 +52,7 @@ export default function Login() {
             <Grid sx={{marginTop: 3, textAlign: 'center'}}>
               <InputLabel id="user_type_label">Type of user to login</InputLabel>
               <Select
+                required
                 name='user_type'
                 labelId="user_type_label"
                 id="user_type"
@@ -56,7 +67,7 @@ export default function Login() {
                   <MenuItem value='admin'>Admin</MenuItem>
                 </Select>
             </Grid>
-            <Box component="form" onSubmit={userType==="member" || userType==="admin" ? (event) => {actions.login(event)} : userType==="trainer" ? (event) => {actions.trainerLogin(event)} : null} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={userType==="member" || userType==="admin" ? (event) => {actions.login(event)} : userType==="trainer" ? (event) => {actions.trainerLogin(event)} : null} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -76,10 +87,22 @@ export default function Login() {
                 id="password"
                 label="Password"
                 name="password"
-                type="password"
                 value={store.userLoggedIn.password}
                 onChange={(event) => actions.handleChangeLogin(event)}
                 autoComplete="current-password"
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                 }
               />
               <Button
                 type="submit"
@@ -90,7 +113,7 @@ export default function Login() {
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
+                <Grid item xs sx={{cursor: "pointer"}}>
                     <Link onClick={()=>navigate("/forgot_password")} variant="body2">
                       Forgot password?
                     </Link>
