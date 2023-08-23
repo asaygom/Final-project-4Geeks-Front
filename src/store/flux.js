@@ -331,6 +331,18 @@ const getState = ({ setStore, getStore, getActions }) => {
         })
           .then((response) => response.json())
           .then((data) =>{ 
+            if (data.error) {
+              toast.error(data.error, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+              })
+            }else{
           toast.success(data.msg, {
             position: "top-center",
             autoClose: 5000,
@@ -340,10 +352,10 @@ const getState = ({ setStore, getStore, getActions }) => {
             draggable: true,
             progress: undefined,
             theme: "light"
+          })}
           })
-          console.log(data)})
-          .catch((error) => {
-            toast.error(error, {
+          .catch((err) => {
+            toast.error(err.message, {
               position: "top-center",
               autoClose: 5000,
               hideProgressBar: false,
@@ -353,7 +365,7 @@ const getState = ({ setStore, getStore, getActions }) => {
               progress: undefined,
               theme: "light"
             })
-            console.log(error);
+            console.error(err.message);
           });
         setStore({
           user: {
@@ -392,7 +404,7 @@ const getState = ({ setStore, getStore, getActions }) => {
               sessionStorage.setItem("user", JSON.stringify(data.user)),
               setStore({
                 token: data.access_token,
-                user: data.user,
+                userLoggedIn: data.user,
               })
             );
           })
