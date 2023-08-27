@@ -23,28 +23,30 @@ export const TopNav = (props) => {
           right: {
             lg: `${SIDE_NAV_WIDTH}px`
           },
-          top: 10,
+          top: 0,
           zIndex: (theme) => theme.zIndex.appBar
         }}
       >
         <Stack
-          justifyContent="end"
+          justifyContent="space-between"
           direction="row"
+          alignItems="center"
           spacing={2}
           sx={{
             minHeight: TOP_NAV_HEIGHT,
             px: 2
           }}
         >
-            <Avatar
-              onClick={()=>navigate("/profile")}
-              sx={{
-                cursor: 'pointer',
-                height: 40,
-                width: 40
-              }}
-              src={store.userLoggedIn.photo_link}
-            />
+          <img height="40px" src="http://localhost:3000/FitnessTrackerLogo.png" alt="FitnessTracker Logo"/>
+          <Avatar
+            onClick={()=>navigate("/profile")}
+            sx={{
+              cursor: 'pointer',
+              height: 40,
+              width: 40
+            }}
+            src={store.userLoggedIn.photo_link}
+          />
         </Stack>
       </Box>
     </>

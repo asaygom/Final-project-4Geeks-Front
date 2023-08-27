@@ -11,7 +11,6 @@ import { Context } from "../store/context";
 import { useNavigate } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import { Grid } from "@mui/material";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -72,16 +71,16 @@ export default function Signup() {
             sx={{ mt: 1 }}
           >
             <FormControl fullWidth sx={{ marginTop: 3}}>
-          <InputLabel id="user_type_label">Role</InputLabel>
+          <InputLabel id="user_role_label">Role</InputLabel>
             <Select
               required
-              name="user_type"
-              labelId="user_type_label"
-              id="user_type"
+              name="role"
+              labelId="user_role_label"
+              id="user_role"
               value={userType}
-              label="User type"
+              label="Role"
               displayEmpty
-              onChange={(event) => handleChange(event)}
+              onChange={(event) =>{ handleChange(event);actions.handleChangeUser(event)}}
             >
               <MenuItem value="member">Member</MenuItem>
               <MenuItem value="trainer">Trainer</MenuItem>
@@ -168,20 +167,19 @@ export default function Signup() {
               id="password"
               label="Password"
               name="password"
-              autoComplete="password"
               type={showPassword ? 'text' : 'password'}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                 }
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+                }
               onChange={
                 userType === "member" || userType === "admin"
                   ? (event) => actions.handleChangeUser(event)
@@ -198,26 +196,6 @@ export default function Signup() {
               }
             />
             </FormControl>
-            {userType === "member" ? store.user.role="member" : userType === "admin" ? store.user.role="admin" : null
-            // (
-              // <FormControl fullWidth sx={{ mt: 3 }} variant="outlined">
-              //   <InputLabel id="user_role_label">Role</InputLabel>
-              //   <Select
-              //     required
-              //     name="role"
-              //     labelId="user_role_label"
-              //     id="user_role"
-              //     value={store.user.role}
-              //     label="Role"
-              //     displayEmpty
-              //     onChange={(event) => actions.handleChangeUser(event)}
-              //   >
-              //     <MenuItem value="admin">Admin</MenuItem>
-              //     <MenuItem value="member">Member</MenuItem>
-              //   </Select>
-              // </FormControl>
-            // )
-          }
             <Button
               type="submit"
               fullWidth

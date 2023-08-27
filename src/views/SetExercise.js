@@ -172,7 +172,7 @@ export default function SetExercise() {
                               <MenuItem value=""><em>Report equipment</em></MenuItem>
                               <MenuItem value='minor_issue'>Minor issue</MenuItem>
                               <MenuItem value='mid_issue'>Middle issue</MenuItem>
-                              <MenuItem value='mayor_issue'>Major issue</MenuItem>
+                              <MenuItem value='major_issue'>Major issue</MenuItem>
                           </Select>
                       </Grid>
                       <Grid item xs={12}>
@@ -340,7 +340,7 @@ export default function SetExercise() {
                                 <MenuItem value=""><em>Report equipment</em></MenuItem>
                                 <MenuItem value='minor_issue'>Minor issue</MenuItem>
                                 <MenuItem value='mid_issue'>Middle issue</MenuItem>
-                                <MenuItem value='mayor_issue'>Major issue</MenuItem>
+                                <MenuItem value='major_issue'>Major issue</MenuItem>
                             </Select>
                         </Grid>
                         <Grid item xs={12}>

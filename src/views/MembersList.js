@@ -75,7 +75,6 @@ const MembersList = () => {
     const usersIds = useUserIds(users);
     const usersSelection = useSelection(usersIds);
     const listOfUsersAndTrainers = store.listOfUsers.concat(store.listOfTrainers)
-    console.log(listOfUsersAndTrainers)
   
     const handlePageChange = useCallback(
       (event, value) => {
