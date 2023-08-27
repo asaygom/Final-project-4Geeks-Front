@@ -74,7 +74,15 @@ const getState = ({ setStore, getStore, getActions }) => {
       listOfActivesMembers: [],
       listOfWorkingEquipments: [],
       listOfMalfunctionEquipments: [],
-      listOfNotWorkingEquipments: []
+      listOfNotWorkingEquipments: [],
+      newRoutine: {
+        name: "",
+        weekday: "",
+        completed_percentage: 0.5,
+        is_completed: false,
+        is_active: false,
+        training_plan_id: "",
+      },
     },
     actions: {
       getUsers: () => {
@@ -177,8 +185,8 @@ const getState = ({ setStore, getStore, getActions }) => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "light"
-              })
+                theme: "light",
+              });
               console.log(data);
             })
             .catch((error) => {
@@ -190,8 +198,8 @@ const getState = ({ setStore, getStore, getActions }) => {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "light"
-              })
+                theme: "light",
+              });
               console.log(error);
             });
         }
@@ -370,7 +378,7 @@ const getState = ({ setStore, getStore, getActions }) => {
           body: JSON.stringify(store.user)
         })
           .then((response) => response.json())
-          .then((data) =>{ 
+          .then((data) => {
             if (data.error) {
               toast.error(data.error, {
                 position: "top-center",
@@ -415,8 +423,8 @@ const getState = ({ setStore, getStore, getActions }) => {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "light"
-            })
+              theme: "light",
+            });
             console.error(err.message);
           });
       },
@@ -605,13 +613,13 @@ const getState = ({ setStore, getStore, getActions }) => {
       },
 
       getTrainingPlan: () => {
-        fetch("http://localhost:5000/trainigplan", {
+        fetch("http://localhost:5000/training_plan", {
           method: "GET",
           headers: { "Content-Type": "application/json" }
         })
           .then((response) => response.json())
           .then((data) => {
-            setStore({ trainingPlanList: data });
+            setStore({ trainingPlanList: data.data });
             console.log(data);
           })
           // .then(() => console.log()
@@ -684,7 +692,30 @@ const getState = ({ setStore, getStore, getActions }) => {
           }
         });
       },
-    }
+
+      handleChangeNewRoutine: (event) => {
+        const store = getStore();
+        setStore({
+          newRoutine: {
+            ...store.newRoutine,
+            [event.target.name]: event.target.value,
+          },
+        });
+      },
+
+      handleNewRoutine: (event) => {
+        event.preventDefault();
+        const store = getStore();
+        fetch("http://localhost:5000/routine", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(store.newRoutine),
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      },
+    },
   };
 };
 export default getState;
