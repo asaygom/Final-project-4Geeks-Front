@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-//import ListBulletIcon from '@heroicons/react/24/solid/ListBulletIcon';
 import {
   Avatar,
   Box,
@@ -11,7 +10,7 @@ import {
   Typography
 } from '@mui/material';
 
-export const OverviewRoutines = (props) => {
+export const RoutinesSummary = (props) => {
   const { value, sx } = props;
 
   return (
@@ -29,7 +28,7 @@ export const OverviewRoutines = (props) => {
               gutterBottom
               variant="overline"
             >
-              Task Progress
+              Routine Progress
             </Typography>
             <Typography variant="h4">
               {value}%
@@ -58,7 +57,7 @@ export const OverviewRoutines = (props) => {
   );
 };
 
-OverviewRoutines.propTypes = {
+RoutinesSummary.propTypes = {
   value: PropTypes.number.isRequired,
   sx: PropTypes.object
 };

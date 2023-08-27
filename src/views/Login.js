@@ -7,12 +7,17 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import {useNavigate} from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import FormControl from '@mui/material/FormControl';
 
 export default function Login() {
   const { store, actions } = useContext(Context);
@@ -23,6 +28,12 @@ export default function Login() {
 	}
   useEffect(()=>{},[store.token])
   
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       {(store.token && store.token!=="" && store.token!==undefined) ? navigate("/home"):
@@ -36,26 +47,27 @@ export default function Login() {
               alignItems: 'center',
             }}
           >
-            <Typography component="h1" variant="h3">
-              FitnessTracker
-            </Typography>
-            <Grid sx={{marginTop: 3, textAlign: 'center'}}>
-              <InputLabel id="user_type_label">Type of user to login</InputLabel>
+            <Box sx={{textAlign: 'center', marginBottom:3}}>
+                <img width="300px" src="http://localhost:3000/FitnessTrackerLogo.png" alt="FitnessTracker Logo"/>
+            </Box>
+            <FormControl fullWidth sx={{marginTop: 3}}>
+              <InputLabel id="user_role_label">Role</InputLabel>
               <Select
-                name='user_type'
-                labelId="user_type_label"
-                id="user_type"
+                required
+                name='role'
+                labelId="user_role_label"
+                id="user_role"
                 value={userType}
-                label="User type"
+                label="Role"
                 displayEmpty
                 onChange={(event) => handleChange(event)}
                 >
-                  <MenuItem value=""><em>Select type of user to login</em></MenuItem>
-                  <MenuItem value='member'>Member or Admin</MenuItem>
+                  <MenuItem value='member'>Member</MenuItem>
                   <MenuItem value='trainer'>Trainer</MenuItem>
+                  <MenuItem value='admin'>Admin</MenuItem>
                 </Select>
-            </Grid>
-            <Box component="form" onSubmit={userType==="member" ? (event) => {actions.login(event)} : userType==="trainer" ? (event) => {actions.trainerLogin(event)} : null} noValidate sx={{ mt: 1 }}>
+            </FormControl>
+            <Box component="form" onSubmit={userType==="member" || userType==="admin" ? (event) => {actions.login(event)} : userType==="trainer" ? (event) => {actions.trainerLogin(event)} : null} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -63,23 +75,38 @@ export default function Login() {
                 id="email"
                 label="Email Address"
                 name="email"
-                value={userType==="member" ? store.user.email : userType==="trainer" ? store.trainer.email : null}
-                onChange={userType==="member" ? (event) => actions.handleChangeLogin(event) : userType==="trainer" ? (event) => actions.handleChangeTrainerLogin(event) : null}
+                value={store.userLoggedIn.email}
+                onChange={(event) => actions.handleChangeLogin(event)}
                 autoComplete="email"
                 autoFocus
               />
-              <TextField
+              <FormControl fullWidth sx={{ mt: 2 }} variant="outlined">
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <OutlinedInput
                 margin="normal"
                 required
                 fullWidth
                 id="password"
                 label="Password"
                 name="password"
-                type="password"
-                value={userType==="member" ? store.user.password : userType==="trainer" ? store.trainer.password : null}
-                onChange={userType==="member" ? (event) => actions.handleChangeLogin(event) : userType==="trainer" ? (event) => actions.handleChangeTrainerLogin(event) : null}
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                 }
+                onChange={(event) => actions.handleChangeLogin(event)}
+                value={store.userLoggedIn.password}
                 autoComplete="current-password"
               />
+              </FormControl>
               <Button
                 type="submit"
                 fullWidth
@@ -89,7 +116,7 @@ export default function Login() {
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
+                <Grid item xs sx={{cursor: "pointer"}}>
                     <Link onClick={()=>navigate("/forgot_password")} variant="body2">
                       Forgot password?
                     </Link>

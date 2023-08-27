@@ -37,14 +37,16 @@ export default function NewRoutine() {
     actions.getTrainingPlan();
   }, []);
 
+  const [slidervalue, setSlidervalue] = React.useState(0.5);
+
   const [switches, setSwitches] = React.useState([
-    { id: "monday", checked: false },
-    { id: "tuesday", checked: false },
-    { id: "wednesday", checked: false },
-    { id: "thursday", checked: false },
-    { id: "friday", checked: false },
-    { id: "saturday", checked: false },
-    { id: "sunday", checked: false },
+    { id: "monday", checked: false, name: "weekday" },
+    { id: "tuesday", checked: false, name: "weekday" },
+    { id: "wednesday", checked: false, name: "weekday" },
+    { id: "thursday", checked: false, name: "weekday" },
+    { id: "friday", checked: false, name: "weekday" },
+    { id: "saturday", checked: false, name: "weekday" },
+    { id: "sunday", checked: false, name: "weekday" },
   ]);
 
   const handleSwitches = (switchID) => {
@@ -54,6 +56,8 @@ export default function NewRoutine() {
         : { ...item, checked: false }
     );
     setSwitches(updateSwitches);
+    const checkedSwitches = updateSwitches.filter((item) => item.checked);
+    return checkedSwitches.map((item) => item.id);
   };
 
   // console.log(store.listOfExercises);
@@ -71,16 +75,25 @@ export default function NewRoutine() {
         <Typography component="h1" variant="h5">
           Create a new Routine
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          noValidate
+          sx={{ mt: 1 }}
+          onSubmit={(event) => actions.handleNewRoutine(event)}
+        >
           <TextField
             margin="normal"
             required
             fullWidth
             id="Routine name"
             label="Routine name"
-            name="Routine Name"
+            name="name"
             autoComplete="Routine name"
             autoFocus
+            onChange={(event) => {
+              actions.handleChangeNewRoutine(event);
+              console.log(store.newRoutine);
+            }}
           />
 
           <TextField
@@ -89,16 +102,32 @@ export default function NewRoutine() {
             id="outlined-select-currency"
             select
             label="Is Completed?"
-            defaultValue="No"
+            defaultValue={false}
             helperText=""
-          />
+            name="is_completed"
+            onChange={(event) => {
+              actions.handleChangeNewRoutine(event);
+            }}
+          >
+            {isactivevalue.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
           {switches.map((item) => (
             <FormControlLabel
               key={item.id}
               control={
                 <Switch
                   checked={item.checked}
-                  onChange={() => handleSwitches(item.id)}
+                  onChange={() => {
+                    const p = handleSwitches(item.id);
+                    actions.handleChangeNewRoutine({
+                      target: { name: "weekday", value: p[0] },
+                    });
+                    console.log(store.newRoutine);
+                  }}
                 />
               }
               label={item.id}
@@ -111,8 +140,12 @@ export default function NewRoutine() {
             id="outlined-select-currency"
             select
             label="Is active?"
-            defaultValue="No"
+            defaultValue={false}
+            name="is_active"
             helperText=""
+            onChange={(event) => {
+              actions.handleChangeNewRoutine(event);
+            }}
           >
             {isactivevalue.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -125,6 +158,15 @@ export default function NewRoutine() {
             defaultValue={50}
             aria-label="Default"
             valueLabelDisplay="auto"
+            name="completed_percentage"
+            onChange={(event) => {
+              {
+                setSlidervalue(event.target.value / 100);
+                actions.handleChangeNewRoutine({
+                  target: { name: "completed_percentage", value: slidervalue },
+                });
+              }
+            }}
           />
           {store.trainingPlanList?.length > 0 ? (
             <TextField
@@ -132,9 +174,18 @@ export default function NewRoutine() {
               fullWidth
               id="outlined-select-exercise"
               select
-              label="Add exercise"
+              label="Training plan"
               defaultValue=""
               helperText="Select an training plan"
+              onChange={(event) => {
+                actions.handleChangeNewRoutine({
+                  target: {
+                    name: "training_plan_id",
+                    value: event.target.value,
+                  },
+                });
+                console.log(store.newRoutine);
+              }}
             >
               {store.trainingPlanList.map((exercise) => (
                 <MenuItem key={exercise.id} value={exercise.id}>

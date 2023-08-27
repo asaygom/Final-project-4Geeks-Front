@@ -45,7 +45,7 @@ export default function SetEquipment() {
                   <Typography component="h1" variant="h5">
                   New equipment
                   </Typography>
-                  <Box component="form" noValidate onSubmit={(event)=>{actions.handleSubmitEquipment(event);navigate('/equipment')}} sx={{ mt: 3 }}>
+                  <Box component="form" onSubmit={(event)=>{actions.handleSubmitEquipment(event);navigate('/equipment')}} sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
                       <Grid item xs={12}>
                       <TextField
@@ -73,6 +73,7 @@ export default function SetEquipment() {
                       <Grid item xs={12}>
                           <InputLabel id="equipment_status_label">Status</InputLabel>
                           <Select
+                          required
                           name='status'
                           labelId="equipment_status_label"
                           id="equipment_status"
@@ -135,7 +136,7 @@ export default function SetEquipment() {
                   <Typography component="h1" variant="h5">
                   Edit equipment info
                   </Typography>
-                  <Box component="form" noValidate onSubmit={(event)=>{actions.updateEquipmentInfo(event,id);navigate('/equipment_info/'+store.equipment.id)}} sx={{ mt: 3 }}>
+                  <Box component="form" onSubmit={(event)=>{actions.updateEquipmentInfo(event,id);navigate('/equipment_info/'+store.equipment.id)}} sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
                       <Grid item xs={12}>
                       <TextField
@@ -163,6 +164,7 @@ export default function SetEquipment() {
                       <Grid item xs={12}>
                           <InputLabel id="equipment_status_label">Status</InputLabel>
                           <Select
+                            required
                           name='status'
                           labelId="equipment_status_label"
                           id="equipment_status"
