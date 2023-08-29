@@ -48,7 +48,7 @@ function TrainingPlan() {
               spacing={1}
               >
                 {store.listOfTrainingPlans?.map((trainingplan,index)=>{
-                  return <Grid onClick={()=>navigate("/trainingplan_info/"+trainingplan .id)} key={index} xs={6} sm={6} lg={3}>
+                  return <Grid onClick={()=>navigate("/trainingplan_info/"+trainingplan.id)} key={index} xs={6} sm={6} lg={3}>
                     <TrainingPlanCard id={trainingplan.id} trainingplan_name={trainingplan.name} trainingplan_img={trainingplan.photo_link}/>
                     </Grid>})}
               </Grid>
