@@ -159,13 +159,8 @@ export default function NewRoutine() {
             aria-label="Default"
             valueLabelDisplay="auto"
             name="completed_percentage"
-            onChange={(event) => {
-              {
-                setSlidervalue(event.target.value / 100);
-                actions.handleChangeNewRoutine({
-                  target: { name: "completed_percentage", value: slidervalue },
-                });
-              }
+            onChange={(event) => {setSlidervalue(event.target.value / 100);actions.handleChangeNewRoutine({target: { name: "completed_percentage", value: slidervalue }});
+              
             }}
           />
           {store.trainingPlanList?.length > 0 ? (

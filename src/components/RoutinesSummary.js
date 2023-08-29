@@ -9,6 +9,7 @@ import {
   SvgIcon,
   Typography
 } from '@mui/material';
+import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 
 export const RoutinesSummary = (props) => {
   const { value, sx } = props;
@@ -42,7 +43,7 @@ export const RoutinesSummary = (props) => {
             }}
           >
             <SvgIcon>
-              
+              <SportsGymnasticsIcon />
             </SvgIcon>
           </Avatar>
         </Stack>

@@ -305,8 +305,32 @@ const getState = ({ setStore, getStore, getActions }) => {
             body: JSON.stringify(store.exercise)
           })
             .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.log(error));
+            .then((data) => {
+              toast.success(data.msg, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+              console.log(data);
+            })
+            .catch((error) => {
+              toast.error(error, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
+              console.log(error);
+            });
         }
         setStore({
           exercise: {
@@ -358,7 +382,18 @@ const getState = ({ setStore, getStore, getActions }) => {
           body: JSON.stringify(store.exercise)
         })
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) => {
+            toast.success(data.msg, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+          })
           .catch((error) => console.log(error));
       },
       deleteExercise: (id) => {
@@ -366,7 +401,18 @@ const getState = ({ setStore, getStore, getActions }) => {
           method: "DELETE"
         })
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) => {
+            toast.success(data.msg, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+          })
           .catch((error) => console.log(error));
       },
       signupUser: (event) => {
@@ -712,7 +758,18 @@ const getState = ({ setStore, getStore, getActions }) => {
           body: JSON.stringify(store.newRoutine),
         })
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) => {
+            toast.success(data.msg, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+          })
           .catch((error) => console.log(error));
       },
     },
