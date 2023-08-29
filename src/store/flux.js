@@ -35,7 +35,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         routine_id: null,
         photo_link: "",
         equipment_name: "",     //@@@
-        routine_name:"",    //@@@
+        routine_name: "",    //@@@
       },
       listOfExercises: [],
       trainingplan: {
@@ -52,8 +52,8 @@ const getState = ({ setStore, getStore, getActions }) => {
         photo_link: "",
         user_name: "",
         user_lastname: "",
-        trainer_name:"",
-        trainer_lastname:"",
+        trainer_name: "",
+        trainer_lastname: "",
       },
       listOfTrainingPlans: [],
       routine: {
@@ -323,7 +323,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         if (store.exercise) {
           fetch("http://localhost:5000/exercise", {
             method: "POST",
-            headers: { "Content-Type": "application/json","Authorization": "Bearer " + store.token },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + store.token },
             body: JSON.stringify(store.exercise),
           })
             .then((response) => response.json())
@@ -363,9 +363,10 @@ const getState = ({ setStore, getStore, getActions }) => {
         });
       },
       getExerciseInfo: (id) => {
+        const store = getStore();
         fetch("http://localhost:5000/exercise/" + id, {
           method: "GET",
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json","Authorization": "Bearer " + store.token},
         })
           .then((response) => response.json())
           .then((data) => setStore({ exercise: data }))
@@ -376,7 +377,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         const store = getStore();
         fetch("http://localhost:5000/exercise/" + id, {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json","Authorization": "Bearer " + store.token },
           body: JSON.stringify(store.exercise)
         })
           .then((response) => response.json())
@@ -384,8 +385,10 @@ const getState = ({ setStore, getStore, getActions }) => {
           .catch((error) => console.log(error));
       },
       deleteExercise: (id) => {
+        const store = getStore();
         fetch("http://localhost:5000/exercise/" + id, {
           method: "DELETE",
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + store.token },
         })
           .then((response) => response.json())
           .then((data) => console.log(data))
@@ -407,8 +410,8 @@ const getState = ({ setStore, getStore, getActions }) => {
             photo_link: "",
             user_name: "",
             user_lastname: "",
-            trainer_name:"",
-            trainer_lastname:"",
+            trainer_name: "",
+            trainer_lastname: "",
           },
         });
       },
@@ -416,7 +419,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         const store = getStore();
         fetch("http://localhost:5000/trainingplan/" + id, {
           method: "GET",
-          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + store.token},
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + store.token },
         })
           .then((response) => response.json())
           .then((data) => setStore({ trainingplan: data }))
@@ -427,7 +430,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         const store = getStore();
         fetch("http://localhost:5000/trainingplan/" + id, {
           method: "PUT",
-          headers: { "Content-Type": "application/json","Authorization": "Bearer " + store.token },
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + store.token },
           body: JSON.stringify(store.trainingplan),
         })
           .then((response) => response.json())
@@ -438,7 +441,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         const store = getStore();
         fetch("http://localhost:5000/trainingplan/" + id, {
           method: "DELETE",
-          headers: { "Content-Type": "application/json","Authorization": "Bearer " + store.token },
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + store.token },
         })
           .then((response) => response.json())
           .then((data) => console.log(data))
@@ -446,7 +449,7 @@ const getState = ({ setStore, getStore, getActions }) => {
       },
 
 
-      
+
       handleChangeTrainingPlan: (event) => {    //@@@
         const store = getStore();
         if (event.target.name === "is_completed") {
@@ -472,7 +475,7 @@ const getState = ({ setStore, getStore, getActions }) => {
         if (store.trainingplan) {
           fetch("http://localhost:5000/trainingplan", {
             method: "POST",
-            headers: { "Content-Type": "application/json","Authorization": "Bearer " + store.token},
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + store.token },
             body: JSON.stringify(store.trainingplan),
           })
             .then((response) => response.json())
@@ -494,8 +497,8 @@ const getState = ({ setStore, getStore, getActions }) => {
             photo_link: "",
             user_name: "",
             user_lastname: "",
-            trainer_name:"",
-            trainer_lastname:"",
+            trainer_name: "",
+            trainer_lastname: "",
           },
         });
       },
@@ -520,29 +523,30 @@ const getState = ({ setStore, getStore, getActions }) => {
                 progress: undefined,
                 theme: "light"
               })
-            }else{
-            toast.success(data.msg, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light"
-          });
-          setStore({
-            user: {
-              name: "",
-              last_name: "",
-              email: "",
-              password: "",
-              role: "",
-              trainer_id: "",
-              is_active: true,
-              subscription_date: ""
+            } else {
+              toast.success(data.msg, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+              });
+              setStore({
+                user: {
+                  name: "",
+                  last_name: "",
+                  email: "",
+                  password: "",
+                  role: "",
+                  trainer_id: "",
+                  is_active: true,
+                  subscription_date: ""
+                }
+              });
             }
-          });}
           })
           .catch((err) => {
             toast.error(err.message, {
@@ -560,20 +564,21 @@ const getState = ({ setStore, getStore, getActions }) => {
       },
       handleChangeUser: (event) => {
         const store = getStore();
-        if (event.target.value==="trainer"){
+        if (event.target.value === "trainer") {
           setStore({
             trainer: {
               ...store.trainer,
               [event.target.name]: event.target.value
             }
           });
-        }else{
-        setStore({
-          user: {
-            ...store.user,
-            [event.target.name]: event.target.value
-          }
-        });}
+        } else {
+          setStore({
+            user: {
+              ...store.user,
+              [event.target.name]: event.target.value
+            }
+          });
+        }
       },
       login: (event) => {
         event.preventDefault();
@@ -596,15 +601,16 @@ const getState = ({ setStore, getStore, getActions }) => {
                 progress: undefined,
                 theme: "light"
               })
-            }else{
-            return (
-              sessionStorage.setItem("token", data.access_token),
-              sessionStorage.setItem("user", JSON.stringify(data.user)),
-              setStore({
-                token: data.access_token,
-                userLoggedIn: data.user
-              })
-            )};
+            } else {
+              return (
+                sessionStorage.setItem("token", data.access_token),
+                sessionStorage.setItem("user", JSON.stringify(data.user)),
+                setStore({
+                  token: data.access_token,
+                  userLoggedIn: data.user
+                })
+              )
+            };
           })
           .catch((err) => {
             toast.error(err.message, {
@@ -650,15 +656,16 @@ const getState = ({ setStore, getStore, getActions }) => {
                 progress: undefined,
                 theme: "light"
               })
-            }else{
-            return (
-              sessionStorage.setItem("token", data.access_token),
-              sessionStorage.setItem("user", JSON.stringify(data.user)),
-              setStore({
-                token: data.access_token,
-                trainer: data.user
-              })
-            )};
+            } else {
+              return (
+                sessionStorage.setItem("token", data.access_token),
+                sessionStorage.setItem("user", JSON.stringify(data.user)),
+                setStore({
+                  token: data.access_token,
+                  trainer: data.user
+                })
+              )
+            };
           })
           .catch((err) => {
             toast.error(err.message, {
@@ -720,15 +727,18 @@ const getState = ({ setStore, getStore, getActions }) => {
           .catch((error) => console.log(error));
       },
       getExercise: () => {
+        const store = getStore();
         fetch("http://localhost:5000/exercise", {
           method: "GET",
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json","Authorization": "Bearer " + store.token }
         })
           .then((response) => response.json())
           .then((data) => {
-            setStore({ listOfExercises: data.data,
+            setStore({
+              listOfExercises: data.data,
               equipment_name: data.equipment_name, // Añadiendo el nombre del equipo y rutina
-              routine_name: data.routine_name, });
+              routine_name: data.routine_name,
+            });
             console.log(data);
           })
           // .then(() => console.log()
@@ -738,14 +748,17 @@ const getState = ({ setStore, getStore, getActions }) => {
         const store = getStore();
         fetch("http://localhost:5000/trainingplan", {
           method: "GET",
-          headers: { 
-            "Content-Type": "application/json","Authorization": "Bearer " + store.token  // @@@
-          },        })
+          headers: {
+            "Content-Type": "application/json", "Authorization": "Bearer " + store.token  // @@@
+          },
+        })
           .then((response) => response.json())
           .then((data) => {
-            setStore({ listOfTrainingPlans: data.data,
+            setStore({
+              listOfTrainingPlans: data.data,
               user_name: data.user_name, //@@@ Añadiendo el nombre del usuario y entrenador
-              trainer_name: data.trainer_name, });
+              trainer_name: data.trainer_name,
+            });
             console.log(data);
           })
           // .then(() => console.log()
@@ -764,49 +777,15 @@ const getState = ({ setStore, getStore, getActions }) => {
       signupTrainer: (event, notify) => {
         event.preventDefault();
         const store = getStore();
-          fetch("http://localhost:5000/trainer", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(store.trainer)
-          })
-            .then((response) => response.json())
-            .then((data) =>{ 
-              if (data.error) {
-                toast.error(data.error, {
-                  position: "top-center",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "light"
-                })
-              }else{
-              toast.success(data.msg, {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light"
-            });
-            setStore({
-              trainer: {
-                name: "",
-                last_name: "",
-                email: "",
-                password: "",
-                role: "trainer",
-                is_active: true,
-                attendance: false
-              }
-            });}
-            })
-            .catch((err) => {
-              toast.error(err.message, {
+        fetch("http://localhost:5000/trainer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(store.trainer)
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              toast.error(data.error, {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -816,8 +795,43 @@ const getState = ({ setStore, getStore, getActions }) => {
                 progress: undefined,
                 theme: "light"
               })
-              console.error(err.message);
-            });
+            } else {
+              toast.success(data.msg, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+              });
+              setStore({
+                trainer: {
+                  name: "",
+                  last_name: "",
+                  email: "",
+                  password: "",
+                  role: "trainer",
+                  is_active: true,
+                  attendance: false
+                }
+              });
+            }
+          })
+          .catch((err) => {
+            toast.error(err.message, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            })
+            console.error(err.message);
+          });
       },
       handleChangeTrainer: (event) => {
         const store = getStore();
