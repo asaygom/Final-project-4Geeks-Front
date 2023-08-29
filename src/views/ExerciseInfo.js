@@ -92,7 +92,7 @@ function ExerciseInfo(props) {
               gutterBottom
               variant="h6"
             >
-              {store.exercise.equipment_issue === "minor_issue" ? "Equipment Alert: Minor Issue" : store.exercise.equipment_issue ==="mid_issue" ? "Equipment Alert:  Middle Issue" : store.exercise.equipment_issue ==="mayor_issue" ? "Equipment Alert:  Major Issue" : null}
+              {store.exercise.equipment_issue === "minor_issue" ? "Equipment Alert: Minor Issue" : store.exercise.equipment_issue ==="mid_issue" ? "Equipment Alert:  Middle Issue" : store.exercise.equipment_issue ==="major_issue" ? "Equipment Alert:  Major Issue" : null}
             </Typography>
             <Typography
               gutterBottom

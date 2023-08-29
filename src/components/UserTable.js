@@ -49,7 +49,7 @@ export const UserTable = (props) => {
                       {user.email}
                     </TableCell>
                     <TableCell>
-                      {user.role==="admin"?"Admin":user.role==="member"?"Member":!user.role?"Trainer": null}
+                      {user.role==="admin"?"Admin":user.role==="member"?"Member":user.role==="trainer"?"Trainer": null}
                     </TableCell>
                     <TableCell>
                       {user.is_active ? "Yes" : "No"}

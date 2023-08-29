@@ -80,7 +80,7 @@ const Profile = () => {
     </>
   )}
 
-  if (store.userLoggedIn.role==="member" || store.trainer){
+  if (store.userLoggedIn.role==="member" || store.userLoggedIn.role==="trainer"){
     return (
     <>
       <Button onClick={()=>navigate('/home')} variant="text" size="small">Back</Button>
@@ -130,7 +130,7 @@ const Profile = () => {
               sm={6}
               lg={3}
             >
-              {store.trainer.name!=="" ? null :
+              {store.userLoggedIn.role==="trainer" ? null :
               <>
               <Typography
                 gutterBottom

@@ -32,7 +32,7 @@ export default function ChangePassword() {
             alignItems: 'center',
           }}
         >
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -44,6 +44,7 @@ export default function ChangePassword() {
               autoComplete="current-password"
             />
             <TextField
+              helperText="Password must have at least 8 characters, one special character, one number, uppercase and lowercase letters"
               margin="normal"
               required
               fullWidth
