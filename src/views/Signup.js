@@ -149,6 +149,7 @@ export default function Signup() {
             />
             <TextField
               margin="normal"
+              type="password"   //para que chrome sugiera contraseña
               required
               fullWidth
               id="password"

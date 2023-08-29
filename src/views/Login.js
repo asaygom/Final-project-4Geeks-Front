@@ -21,11 +21,13 @@ export default function Login() {
   const handleChange = (event) => {
 		setUserType(event.target.value)
 	}
-  useEffect(()=>{},[store.token])
-  
+  useEffect(() => {
+    if (store.token && store.token !== "" && store.token !== undefined) {         //cambio para no navegar en la funcion de renderizado, error chrome
+        navigate("/home");
+    }
+}, [store.token, navigate])  
   return (
     <>
-      {(store.token && store.token!=="" && store.token!==undefined) ? navigate("/home"):
       <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -99,6 +101,6 @@ export default function Login() {
             </Box>
           </Box>
         </Container>
-}</>
+</>
         );
 }

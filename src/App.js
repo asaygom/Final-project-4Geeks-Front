@@ -17,8 +17,12 @@ import NewRoutine from "./views/NewRoutine";
 import Exercise from './views/Exercise';
 import SetExercise from './views/SetExercise';
 import ExerciseInfo from './views/ExerciseInfo';
+import TrainingPlan from './views/TrainingPlan';  //@@@
+import SetTrainingPlan from './views/SetTrainingPlan';  //@@@
+import TrainingPlanInfo from './views/TrainingPlanInfo';  //@@@
 import Attendance from "./views/Attendance";
 import { ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -53,6 +57,9 @@ function App() {
         <Route path='/exercise' element={<Exercise />} />
         <Route path='/set_exercise/:id' element={<SetExercise />} />
         <Route path='/exercise_info/:id' element={<ExerciseInfo />} />
+        <Route path='/trainingplan' element={<TrainingPlan />} />
+        <Route path='/set_trainingplan/:id' element={<SetTrainingPlan />} />
+        <Route path='/trainingplan_info/:id' element={<TrainingPlanInfo />} />
       </Routes>
     </BrowserRouter>
   );
