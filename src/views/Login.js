@@ -36,6 +36,7 @@ export default function Login() {
 
   return (
     <>
+      {(store.token && store.token!=="" && store.token!==undefined) ? navigate("/home"):
       <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -124,6 +125,6 @@ export default function Login() {
             </Box>
           </Box>
         </Container>
-</>
+}</>
         );
 }
