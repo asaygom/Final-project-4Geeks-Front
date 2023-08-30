@@ -94,6 +94,16 @@ const Home = () => {
             >
               <RoutinesSummary
                 sx={{ height: '100%' }}
+                value={75}
+              />
+            </Grid>
+            <Grid
+              xs={12}
+              sm={6}
+              lg={3}
+            >
+              <RoutinesSummary
+                sx={{ height: '100%' }}
                 value={50}
               />
             </Grid>

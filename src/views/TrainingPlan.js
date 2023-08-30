@@ -1,16 +1,16 @@
 import { useContext, useEffect } from "react";
 import { Stack, Button, Box, Container, Unstable_Grid2 as Grid, Typography } from '@mui/material';
-import ExerciseCard from '../components/ExerciseCard';
+import TrainingPlanCard from '../components/TrainingPlanCard';
 import { TopNav } from '../components/TopNav';
 import BottomNav from '../components/BottomNav';
 import { SearchBar } from '../components/SearchBar';
 import { Context } from "../store/context";
 import {useNavigate} from "react-router-dom";
 
-function Exercise() {
+function TrainingPlan() {
     const { store, actions } = useContext(Context);
     const navigate=useNavigate()
-    useEffect(()=>{actions.getExercise()},[])
+    useEffect(()=>{actions.getTrainingPlan()},[])
   return(
     <>
     <TopNav />
@@ -30,12 +30,12 @@ function Exercise() {
               >
                   <Stack spacing={1}>
                       <Typography variant="h4">
-                      Exercises
+                      Training Plans
                       </Typography>
                   </Stack>
                   <div>
                       <Button
-                      onClick={()=>navigate('/set_exercise/new')}
+                      onClick={()=>navigate('/set_trainingplan/new')}
                       variant="contained"
                       >
                       Add
@@ -47,17 +47,17 @@ function Exercise() {
               container
               spacing={1}
               >
-                {store.listOfExercises?.map((exercise,index)=>{
-                  return <Grid onClick={()=>navigate("/exercise_info/"+exercise.id)} key={index} xs={6} sm={6} lg={3}>
-                    <ExerciseCard id={exercise.id} exercise_name={exercise.name} exercise_img={exercise.photo_link}/>
+                {store.listOfTrainingPlans?.map((trainingplan,index)=>{
+                  return <Grid onClick={()=>navigate("/trainingplan_info/"+trainingplan.id)} key={index} xs={6} sm={6} lg={3}>
+                    <TrainingPlanCard id={trainingplan.id} trainingplan_name={trainingplan.name} trainingplan_img={trainingplan.photo_link}/>
                     </Grid>})}
               </Grid>
           </Stack>
         </Container>
       </Box>
-      <BottomNav navToggle="exercises"/>
+      <BottomNav navToggle="trainingplans"/>
     </>
   )
 };
 
-export default Exercise;
+export default TrainingPlan;

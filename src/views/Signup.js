@@ -162,6 +162,7 @@ export default function Signup() {
             <InputLabel htmlFor="password">Password</InputLabel>
             <OutlinedInput
               margin="normal"
+              type="password"   //para que chrome sugiera contraseña
               required
               fullWidth
               id="password"
